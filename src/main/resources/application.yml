@@ -1,0 +1,16 @@
+# server端口号
+server:
+  port: 18081
+
+spring:
+  main:
+    banner-mode: off  # Spring boot的logo不显示
+  datasource: #配置数据库相关
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rpa?serverTimezone=UTC
+    username: root
+    password: 13369159060
+
+mybatis-plus:
+  global-config:
+    banner: off # MybatisPlus的logo不显示
