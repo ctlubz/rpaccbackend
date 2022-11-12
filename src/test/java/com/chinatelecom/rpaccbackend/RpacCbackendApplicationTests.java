@@ -1,5 +1,6 @@
 package com.chinatelecom.rpaccbackend;
 
+import com.chinatelecom.rpaccbackend.common.pojo.BusiProperty;
 import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
 import com.chinatelecom.rpaccbackend.dao.TestDAO;
 import com.chinatelecom.rpaccbackend.pojo.TestDO;
@@ -29,7 +30,9 @@ class RpacCbackendApplicationTests {
     @Test
     void jsonTest(){
         TestDO testDO = new TestDO();
-        testDO.setUsername("5895");
+        String testString =
+                "归属本地网 停机类型：是停类型 停机子类型：是停子类型 停机备注：是备注哦";
+        testDO.setUsername(StringSplit.split(testString, BusiProperty.PROD_SHUTDOWN.getBusiProperty()));
         System.out.println(testDAO.insert(testDO));
     }
 }

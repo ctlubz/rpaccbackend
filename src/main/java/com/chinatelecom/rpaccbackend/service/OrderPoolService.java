@@ -18,12 +18,12 @@ public class OrderPoolService {
     public List<OrderPool> orderPoolIndex(){
         return orderPoolDAO.selectList(null);
     }
-    public Integer insertOrderPool(Long orderId, String remark){
+    public Integer insertOrderPool(Long orderId, String remark, String busiType){
         // @TODO 备注转化
         OrderPool orderPool = new OrderPool();
         orderPool.setOrderId(orderId);
         JSON remarkJSON = StringSplit.split(remark, BusiProperty.PROD_SHUTDOWN.getBusiProperty());
-        //orderPool.setRemark(StringSplit.split(remark, ));
+        orderPool.setRemark(remarkJSON);
         return orderPoolDAO.insert(orderPool);
     }
 }
