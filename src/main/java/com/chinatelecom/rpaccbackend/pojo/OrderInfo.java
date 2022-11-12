@@ -1,8 +1,6 @@
 package com.chinatelecom.rpaccbackend.pojo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,7 +9,6 @@ import java.util.Date;
 @TableName("tb_order_info")
 public class OrderInfo {
     @TableId
-    @TableField("order_id")
     public Long orderId;
     @TableField("buis_type")
     public String buisType;
@@ -29,10 +26,11 @@ public class OrderInfo {
     public String remark;
     @TableField("local_net")
     public String localNet;
-    @TableField("create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     public Date createTime;
-    @TableField("update_time")
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
     public Date updateTime;
+    @TableLogic
     @TableField("is_deleted")
     public Date deleted;
 }
