@@ -1,4 +1,4 @@
-package com.chinatelecom.rpaccbackend.pojo.common;
+package com.chinatelecom.rpaccbackend.common.pojo;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.chinatelecom.rpaccbackend.util;
+package com.chinatelecom.rpaccbackend.common.util;
 
 
 import com.alibaba.fastjson.JSON;

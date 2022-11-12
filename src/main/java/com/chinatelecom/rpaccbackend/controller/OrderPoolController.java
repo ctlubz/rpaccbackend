@@ -1,9 +1,8 @@
 package com.chinatelecom.rpaccbackend.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chinatelecom.rpaccbackend.pojo.OrderPool;
-import com.chinatelecom.rpaccbackend.pojo.common.Result;
+import com.chinatelecom.rpaccbackend.common.pojo.Result;
 import com.chinatelecom.rpaccbackend.service.OrderPoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

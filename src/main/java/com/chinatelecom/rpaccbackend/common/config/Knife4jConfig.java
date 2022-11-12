@@ -1,4 +1,4 @@
-package com.chinatelecom.rpaccbackend.config;
+package com.chinatelecom.rpaccbackend.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

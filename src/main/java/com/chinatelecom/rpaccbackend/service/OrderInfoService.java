@@ -15,4 +15,12 @@ public class OrderInfoService {
     public List<OrderInfo> orderInfoIndex(){
         return orderInfoDAO.selectList(null);
     }
+
+    public OrderInfo selectOneById(Long id){
+        return orderInfoDAO.selectById(id);
+    }
+
+    public Integer insertOrderInfo(OrderInfo orderInfo){
+        return orderInfoDAO.insert(orderInfo);
+    }
 }

@@ -10,8 +10,8 @@ import java.util.Date;
 public class OrderInfo {
     @TableId
     public Long orderId;
-    @TableField("buis_type")
-    public String buisType;
+    @TableField("busi_type")
+    public String busiType;
     @TableField("customer_name")
     public String customerName;
     @TableField("customer_number")
@@ -30,7 +30,7 @@ public class OrderInfo {
     public String localNet;
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     public Date createTime;
-    @TableField(value = "update_time", fill = FieldFill.UPDATE)
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     public Date updateTime;
     @TableLogic
     @TableField("is_deleted")
