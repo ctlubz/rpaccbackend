@@ -1,15 +1,21 @@
 package com.chinatelecom.rpaccbackend;
 
+import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
+import com.chinatelecom.rpaccbackend.dao.TestDAO;
+import com.chinatelecom.rpaccbackend.pojo.TestDO;
 import com.chinatelecom.rpaccbackend.util.StringSplit;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @SpringBootTest
 class RpacCbackendApplicationTests {
-
+    @Autowired
+    private OrderInfoDAO orderInfoDAO;
+    @Autowired
+    private TestDAO testDAO;
     @Test
     void contextLoads() {
         String testString =
@@ -22,6 +28,8 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void jsonTest(){
-
+        TestDO testDO = new TestDO();
+        testDO.setUsername("5895");
+        System.out.println(testDAO.insert(testDO));
     }
 }
