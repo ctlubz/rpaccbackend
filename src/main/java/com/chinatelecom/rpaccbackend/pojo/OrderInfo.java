@@ -32,5 +32,5 @@ public class OrderInfo {
     public Date updateTime;
     @TableLogic
     @TableField("is_deleted")
-    public Date deleted;
+    public Integer deleted;
 }
