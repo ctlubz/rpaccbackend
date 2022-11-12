@@ -4,6 +4,7 @@ import com.chinatelecom.rpaccbackend.util.StringSplit;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @SpringBootTest
@@ -21,7 +22,6 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void jsonTest(){
-        String str = "123456";
-        System.out.println(str.substring(1, 2));
+
     }
 }

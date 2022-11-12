@@ -12,8 +12,10 @@ public class OrderInfo {
     public Long orderId;
     @TableField("buis_type")
     public String buisType;
-    @TableField("customer_id")
-    public String customerId;
+    @TableField("customer_name")
+    public String customerName;
+    @TableField("customer_number")
+    public String customerNumber;
     @TableField("init_time")
     public Date initTime;
     @TableField("salesperson_name")
