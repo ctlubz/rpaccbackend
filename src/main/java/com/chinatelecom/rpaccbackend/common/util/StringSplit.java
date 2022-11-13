@@ -38,12 +38,14 @@ public class StringSplit {
         for(String subString : subStringList){
             for(String target : targetList){
                 if(subString.contains(target)){
+                    //从头开始去除不必要字符
                     int begin = target.length();
                     for(; begin < subString.length(); begin++){
                         if(!redundantSet.contains(subString.charAt(begin))){
                             break;
                         }
                     }
+                    //从尾开始去除不必要字符
                     int end = subString.length();
                     for(; end > target.length(); end--){
                         if(!redundantSet.contains(subString.charAt(end - 1))){
