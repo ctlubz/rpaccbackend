@@ -24,9 +24,7 @@ class RpacCbackendApplicationTests {
     @Test
     void jsonTest(){
         TestDO testDO = new TestDO();
-        String testString =
-                "归属本地网 停机类型：是停类型 停机子类型：是停子类型 停机备注：是备注哦";
-        testDO.setUsername(StringSplit.split(testString, BusiPropertyEnum.PROD_SHUTDOWN.getBusiProperty()));
-        System.out.println(testDAO.insert(testDO));
+        testDO.setId(4L);
+        System.out.println(testDAO.deleteById(testDO.getId()));
     }
 }
