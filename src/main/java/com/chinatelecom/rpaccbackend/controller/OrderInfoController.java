@@ -30,8 +30,6 @@ public class OrderInfoController {
     }
     @GetMapping("prodshutdown")
     public Result<Object> shutdownInfo(){
-        //@TODO 产品停机
-
         return Result.ok(orderInfoService.shutdownInfo());
     }
     @PostMapping("add")
