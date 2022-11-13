@@ -2,9 +2,12 @@ package com.chinatelecom.rpaccbackend.service;
 
 import com.alibaba.fastjson.JSON;
 import com.chinatelecom.rpaccbackend.common.pojo.BusiPropertyEnum;
+import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
+import com.chinatelecom.rpaccbackend.dao.OrderHistoryDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderLogDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
+import com.chinatelecom.rpaccbackend.pojo.OrderHistory;
 import com.chinatelecom.rpaccbackend.pojo.OrderLog;
 import com.chinatelecom.rpaccbackend.pojo.OrderPool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ public class OrderPoolService {
     private OrderPoolDAO orderPoolDAO;
     @Autowired
     private OrderLogDAO orderLogDAO;
+    @Autowired
+    private OrderHistoryDAO orderHistoryDAO;
 
     public List<OrderPool> orderPoolIndex(){
         return orderPoolDAO.selectList(null);
@@ -37,10 +42,22 @@ public class OrderPoolService {
         if(Objects.isNull(orderId)){
             return;
         }
-        //2. 更新订单状态
+        // 2. 订单状态是否为200，是200插入历史工单池
+        if(status.equals(OrderStatusEnum.FINISH.getCode())){
+            OrderHistory orderHistory= new OrderHistory();
+            orderHistory.setOrderId(orderId);
+            orderHistory.setRemark(orderPool.getRemark());
+            orderHistory.setAutomatic(orderPool.getAutomatic());
+            //如果历史库插入成功，逻辑删除OrderPool的订单
+            if(orderHistoryDAO.insert(orderHistory) != 0){
+                orderPoolDAO.deleteById(orderPool.getOrderId());
+            }
+        }
+        // 3. 非200状态
+        // 3-1. 更新订单状态
         orderPool.setOrderStatus(status);
         orderPoolDAO.updateById(orderPool);
-        //3. 向log库中记录数据
+        // 3-2. 向log库中记录数据
         OrderLog orderLog = new OrderLog();
         orderLog.setOrderId(orderId);
         orderLog.setType(status);
