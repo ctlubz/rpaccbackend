@@ -1,6 +1,7 @@
 package com.chinatelecom.rpaccbackend.service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chinatelecom.rpaccbackend.common.pojo.BusiPropertyEnum;
 import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
@@ -60,9 +61,15 @@ public class OrderInfoService {
         if(Objects.isNull(orderPool)){
             return null;
         }
-        // 往数据中添加电话号码等
-        JSON result = orderPool.getRemark();
+        // 2. 从OrderInfo中选出信息
+        OrderInfo orderInfo = orderInfoDAO.selectById(orderPool.getOrderId());
 
-        return result;
+        // 3. 往数据中添加电话号码等
+        String result = orderPool.getRemark().toJSONString();
+        JSONObject jsonObject = JSONObject.parseObject(result);
+        jsonObject.put("业务号码", orderInfo.getCustomerNumber());
+        jsonObject.put("归属本地网", "西安本地网");
+        // @TODO 4. 更改订单状态为执行中
+        return jsonObject;
     }
 }
