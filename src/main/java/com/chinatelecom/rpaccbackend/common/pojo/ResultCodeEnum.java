@@ -22,9 +22,9 @@ public enum ResultCodeEnum {
     NODE_ERROR( 218, "该节点下有子节点，不可以删除")
     ;
 
-    private Integer code;
+    private final Integer code;
 
-    private String message;
+    private final String message;
 
     private ResultCodeEnum(Integer code, String message) {
         this.code = code;

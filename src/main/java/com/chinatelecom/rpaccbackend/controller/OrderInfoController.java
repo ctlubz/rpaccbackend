@@ -50,7 +50,6 @@ public class OrderInfoController {
             orderPoolService.insertOrderPool(orderInfo.getOrderId(), orderInfo.getRemark(), orderInfo.getBusiType());
             return Result.ok(result);
         }
-        // @TODO 更改返回结果
         return Result.fail().message("请求失败");
     }
 }
