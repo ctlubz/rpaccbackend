@@ -23,7 +23,7 @@ public class OrderPoolController {
         return Result.ok(orderPoolService.orderPoolIndex());
     }
 
-    @PostMapping("status")
+    @PutMapping("status")
     public Result<Object> updateOrderStatus(@RequestBody OrderStatusVO orderStatusVO){
         orderPoolService.updateOrderStatus(orderStatusVO.getOrderId(), orderStatusVO.getStatus(), orderStatusVO.getMessage());
         return Result.ok();

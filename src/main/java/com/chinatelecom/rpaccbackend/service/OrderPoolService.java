@@ -39,30 +39,33 @@ public class OrderPoolService {
         // 1. 找出订单
         OrderPool orderPool = orderPoolDAO.selectById(orderId);
         //如果订单为空
-        if(Objects.isNull(orderId)){
+        if(Objects.isNull(orderPool)){
             return;
         }
+        orderPool.setOrderStatus(status);
         // 2. 订单状态是否为200，是200插入历史工单池
-        if(status.equals(OrderStatusEnum.FINISH.getCode())){
+        if(Objects.equals(status, OrderStatusEnum.FINISH.getCode())){
             OrderHistory orderHistory= new OrderHistory();
             orderHistory.setOrderId(orderId);
             orderHistory.setRemark(orderPool.getRemark());
+            orderHistory.setOrderStatus(OrderStatusEnum.FINISH.getCode());
             orderHistory.setAutomatic(orderPool.getAutomatic());
             //如果历史库插入成功，逻辑删除OrderPool的订单
             if(orderHistoryDAO.insert(orderHistory) != 0){
                 orderPoolDAO.deleteById(orderPool.getOrderId());
             }
         }
-        // 3. 非200状态
-        // 3-1. 更新订单状态
-        orderPool.setOrderStatus(status);
-        orderPoolDAO.updateById(orderPool);
-        // 3-2. 向log库中记录数据
-        OrderLog orderLog = new OrderLog();
-        orderLog.setOrderId(orderId);
-        orderLog.setType(status);
-        orderLog.setMessage(message);
-        orderLogDAO.insert(orderLog);
+        else{
+            // 3. 非200状态
+            // 3-1. 更新订单状态
+            orderPoolDAO.updateById(orderPool);
+            // 3-2. 向log库中记录数据
+            OrderLog orderLog = new OrderLog();
+            orderLog.setOrderId(orderId);
+            orderLog.setType(status);
+            orderLog.setMessage(message);
+            orderLogDAO.insert(orderLog);
+        }
     }
 
 }

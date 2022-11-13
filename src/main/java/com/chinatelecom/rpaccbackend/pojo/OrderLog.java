@@ -1,9 +1,6 @@
 package com.chinatelecom.rpaccbackend.pojo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,7 +8,9 @@ import java.util.Date;
 @Data
 @TableName("tb_log")
 public class OrderLog {
-    @TableId
+    @TableId(type = IdType.AUTO)
+    private Long id;
+    @TableField("order_id")
     public Long orderId;
     @TableField("sub_order_id")
     public Long subOrderId;

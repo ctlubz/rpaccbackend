@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Objects;
+
 @SpringBootTest
 class RpacCbackendApplicationTests {
     @Autowired
@@ -23,8 +25,6 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void jsonTest(){
-        TestDO testDO = new TestDO();
-        testDO.setId(4L);
-        System.out.println(testDAO.deleteById(testDO.getId()));
+        System.out.println(Objects.equals(200, 200));
     }
 }
