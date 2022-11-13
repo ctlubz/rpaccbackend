@@ -20,7 +20,7 @@ class RpacCbackendApplicationTests {
     @Test
     void contextLoads() {
         String testString =
-                "归属本地网 停机类型是停类型停机子类型是停子类型停机备注是备注哦";
+                "归属本地网 停机类型：违章停机 停机子类型：无 停机备注：无";
         System.out.println(StringSplit.split(testString, BusiPropertyEnum.PROD_SHUTDOWN.getBusiProperty()));
     }
     @Test

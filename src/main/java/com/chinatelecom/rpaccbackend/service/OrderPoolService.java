@@ -33,9 +33,10 @@ public class OrderPoolService {
         orderPool.setOrderId(orderId);
         JSON remarkJSON = StringSplit.split(remark, BusiPropertyEnum.PROD_SHUTDOWN.getBusiProperty());
         orderPool.setRemark(remarkJSON);
-//        return orderPoolDAO.insert(orderPool);
+        orderPoolDAO.insert(orderPool);
     }
     public void updateOrderStatus(Long orderId, Integer status, String message){
+        // @TODO 事务回滚
         // 1. 找出订单
         OrderPool orderPool = orderPoolDAO.selectById(orderId);
         //如果订单为空

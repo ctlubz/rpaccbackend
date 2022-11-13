@@ -23,7 +23,11 @@ public class OrderInfoController {
     public Result<List<OrderInfo>> orderInfoIndex(){
         return Result.ok(orderInfoService.orderInfoIndex());
     }
-
+    @PutMapping("update")
+    public Result<Object> updateRemark(@RequestBody OrderInfoVO orderInfoVO){
+        orderInfoService.updateRemarkById(orderInfoVO.getOrderId(), orderInfoVO.getRemark());
+        return Result.ok().message("更新备注成功");
+    }
     @PostMapping("add")
     public Result<Object> orderInfoInsert(@RequestBody OrderInfoVO orderInfoVO){
         //判断工单号是否为空
