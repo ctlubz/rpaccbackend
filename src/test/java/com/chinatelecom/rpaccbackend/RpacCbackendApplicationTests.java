@@ -20,12 +20,8 @@ class RpacCbackendApplicationTests {
     @Test
     void contextLoads() {
         String testString =
-                "归属本地网 停机类型：是停类型 停机子类型：是停子类型 停机备注：是备注哦";
-        List<String> targetList = new ArrayList<>();
-        targetList.add("停机类型");
-        targetList.add("停机子类型");
-        targetList.add("停机备注");
-        System.out.println(StringSplit.split(testString, targetList));
+                "归属本地网 停机类型是停类型停机子类型是停子类型停机备注是备注哦";
+        System.out.println(StringSplit.split(testString, BusiProperty.PROD_SHUTDOWN.getBusiProperty()));
     }
     @Test
     void jsonTest(){
