@@ -7,9 +7,9 @@ import com.chinatelecom.rpaccbackend.common.util.StringSplit;
 import com.chinatelecom.rpaccbackend.dao.OrderHistoryDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderLogDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
-import com.chinatelecom.rpaccbackend.pojo.OrderHistory;
-import com.chinatelecom.rpaccbackend.pojo.OrderLog;
-import com.chinatelecom.rpaccbackend.pojo.OrderPool;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderHistory;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderLog;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

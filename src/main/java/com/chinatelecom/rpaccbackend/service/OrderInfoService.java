@@ -1,13 +1,14 @@
 package com.chinatelecom.rpaccbackend.service;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chinatelecom.rpaccbackend.common.pojo.BusiPropertyEnum;
 import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
 import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
-import com.chinatelecom.rpaccbackend.pojo.OrderInfo;
-import com.chinatelecom.rpaccbackend.pojo.OrderPool;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderInfo;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +50,19 @@ public class OrderInfoService {
     }
     public Integer insertOrderInfo(OrderInfo orderInfo){
         return orderInfoDAO.insert(orderInfo);
+    }
+    public JSON shutdownInfo(){
+        // 1. 从OrderPool中选出状态为3的
+        LambdaQueryWrapper<OrderPool> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(OrderPool::getOrderStatus, OrderStatusEnum.WAITING.getCode()).last("limit 1");
+        OrderPool orderPool = orderPoolDAO.selectOne(lambdaQueryWrapper);
+        // 如果找不到
+        if(Objects.isNull(orderPool)){
+            return null;
+        }
+        // 往数据中添加电话号码等
+        JSON result = orderPool.getRemark();
+
+        return result;
     }
 }

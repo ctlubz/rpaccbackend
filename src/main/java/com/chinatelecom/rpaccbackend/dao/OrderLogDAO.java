@@ -1,7 +1,7 @@
 package com.chinatelecom.rpaccbackend.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.chinatelecom.rpaccbackend.pojo.OrderLog;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderLog;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

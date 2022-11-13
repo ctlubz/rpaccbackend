@@ -2,14 +2,13 @@ package com.chinatelecom.rpaccbackend;
 
 import com.chinatelecom.rpaccbackend.common.pojo.BusiPropertyEnum;
 import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
+import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
 import com.chinatelecom.rpaccbackend.dao.TestDAO;
-import com.chinatelecom.rpaccbackend.pojo.TestDO;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Objects;
 
 @SpringBootTest
 class RpacCbackendApplicationTests {
@@ -17,6 +16,8 @@ class RpacCbackendApplicationTests {
     private OrderInfoDAO orderInfoDAO;
     @Autowired
     private TestDAO testDAO;
+    @Autowired
+    private OrderPoolDAO orderPoolDAO;
     @Test
     void contextLoads() {
         String testString =
@@ -25,6 +26,7 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void jsonTest(){
-        System.out.println(Objects.equals(200, 200));
+        OrderPool orderPool = orderPoolDAO.selectById(123455L);
+        System.out.println(orderPool);
     }
 }

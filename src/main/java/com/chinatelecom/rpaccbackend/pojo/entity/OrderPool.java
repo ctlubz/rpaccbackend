@@ -1,4 +1,4 @@
-package com.chinatelecom.rpaccbackend.pojo;
+package com.chinatelecom.rpaccbackend.pojo.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.*;
@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName("tb_order_pool")
+@TableName(value = "tb_order_pool", autoResultMap = true)
 public class OrderPool {
     @TableId
     public Long orderId;

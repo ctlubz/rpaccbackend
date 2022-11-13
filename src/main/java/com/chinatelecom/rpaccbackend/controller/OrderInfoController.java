@@ -1,6 +1,6 @@
 package com.chinatelecom.rpaccbackend.controller;
 
-import com.chinatelecom.rpaccbackend.pojo.OrderInfo;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderInfo;
 import com.chinatelecom.rpaccbackend.common.pojo.Result;
 import com.chinatelecom.rpaccbackend.pojo.vo.OrderInfoVO;
 import com.chinatelecom.rpaccbackend.service.OrderInfoService;
@@ -27,6 +27,12 @@ public class OrderInfoController {
     public Result<Object> updateRemark(@RequestBody OrderInfoVO orderInfoVO){
         orderInfoService.updateRemarkById(orderInfoVO.getOrderId(), orderInfoVO.getRemark());
         return Result.ok().message("更新备注成功");
+    }
+    @GetMapping("prodshutdown")
+    public Result<Object> shutdownInfo(){
+        //@TODO 产品停机
+
+        return Result.ok(orderInfoService.shutdownInfo());
     }
     @PostMapping("add")
     public Result<Object> orderInfoInsert(@RequestBody OrderInfoVO orderInfoVO){

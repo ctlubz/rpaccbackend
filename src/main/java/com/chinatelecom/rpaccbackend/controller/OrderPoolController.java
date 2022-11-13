@@ -1,7 +1,7 @@
 package com.chinatelecom.rpaccbackend.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.chinatelecom.rpaccbackend.pojo.OrderPool;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import com.chinatelecom.rpaccbackend.common.pojo.Result;
 import com.chinatelecom.rpaccbackend.pojo.vo.OrderStatusVO;
 import com.chinatelecom.rpaccbackend.service.OrderPoolService;

@@ -1,7 +1,7 @@
 package com.chinatelecom.rpaccbackend.service;
 
 import com.chinatelecom.rpaccbackend.dao.OrderLogDAO;
-import com.chinatelecom.rpaccbackend.pojo.OrderLog;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

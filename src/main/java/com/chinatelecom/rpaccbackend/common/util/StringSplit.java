@@ -27,10 +27,10 @@ public class StringSplit {
             pointArray.add(input.indexOf(target));
         }
         pointArray.sort(Comparator.naturalOrder());
-        System.out.println("pointArray : "+pointArray);
+//        System.out.println("pointArray : "+pointArray);
         // 2. 根据打点分割字符串
         ArrayList<String> subStringList = splitStringByPoint(input, pointArray);
-        System.out.println(subStringList);
+//        System.out.println(subStringList);
         // 生成多余字符集集合
         HashSet<Character> redundantSet = new HashSet<>();
         for(int i = 0; i < redundantString.length(); i++){

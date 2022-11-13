@@ -1,4 +1,4 @@
-package com.chinatelecom.rpaccbackend.pojo;
+package com.chinatelecom.rpaccbackend.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;

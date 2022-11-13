@@ -3,7 +3,7 @@ package com.chinatelecom.rpaccbackend.controller;
 import com.alibaba.fastjson.JSON;
 import com.chinatelecom.rpaccbackend.common.pojo.Result;
 import com.chinatelecom.rpaccbackend.dao.TestDAO;
-import com.chinatelecom.rpaccbackend.pojo.TestDO;
+import com.chinatelecom.rpaccbackend.pojo.entity.TestDO;
 import com.chinatelecom.rpaccbackend.pojo.vo.TestVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
