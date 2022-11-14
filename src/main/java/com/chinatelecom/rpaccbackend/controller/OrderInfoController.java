@@ -3,6 +3,7 @@ package com.chinatelecom.rpaccbackend.controller;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderInfo;
 import com.chinatelecom.rpaccbackend.common.pojo.Result;
 import com.chinatelecom.rpaccbackend.pojo.vo.OrderInfoVO;
+import com.chinatelecom.rpaccbackend.pojo.vo.UpdateRemarkVO;
 import com.chinatelecom.rpaccbackend.service.OrderInfoService;
 import com.chinatelecom.rpaccbackend.service.OrderPoolService;
 import io.swagger.annotations.Api;
@@ -29,8 +30,8 @@ public class OrderInfoController {
     }
     @PutMapping("update")
     @ApiOperation("更新工单备注")
-    public Result<Object> updateRemark(@RequestBody OrderInfoVO orderInfoVO){
-        orderInfoService.updateRemarkById(orderInfoVO.getOrderId(), orderInfoVO.getRemark());
+    public Result<Object> updateRemark(@RequestBody UpdateRemarkVO updateRemarkVO){
+        orderInfoService.updateRemarkById(updateRemarkVO.getOrderId(), updateRemarkVO.getRemark());
         return Result.ok().message("更新备注成功");
     }
     @GetMapping("prodshutdown")
