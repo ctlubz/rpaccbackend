@@ -1,6 +1,7 @@
 package com.chinatelecom.rpaccbackend;
 
 import com.chinatelecom.rpaccbackend.common.pojo.BusiPropertyEnum;
+import com.chinatelecom.rpaccbackend.dao.CommonDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
 import com.chinatelecom.rpaccbackend.dao.TestDAO;
@@ -17,6 +18,8 @@ class RpacCbackendApplicationTests {
     @Autowired
     private TestDAO testDAO;
     @Autowired
+    private CommonDAO commonDAO;
+    @Autowired
     private OrderPoolDAO orderPoolDAO;
     @Test
     void contextLoads() {
@@ -26,7 +29,6 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void jsonTest(){
-        OrderPool orderPool = orderPoolDAO.selectById(123455L);
-        System.out.println(orderPool);
+        System.out.println(commonDAO.orderPoolIndex());
     }
 }
