@@ -7,9 +7,9 @@ spring:
     banner-mode: off  # Spring boot的logo不显示
   datasource: #配置数据库相关
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rpacc_db?serverTimezone=UTC
-    username: root
-    password: 123456
+    url: jdbc:mysql://133.65.150.169:8921/rpacc?serverTimezone=UTC
+    username: rpacc_user
+    password: LC$fwGI61Iq!OwsC
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
 
