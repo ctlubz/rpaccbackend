@@ -31,8 +31,8 @@ public class OrderPoolService {
     public void insertOrderPool(Long orderId, String remark, String busiType){
         OrderPool orderPool = new OrderPool();
         orderPool.setOrderId(orderId);
-        JSON remarkJSON = StringSplit.split(remark, BusiPropertyEnum.PROD_SHUTDOWN.getBusiProperty());
-        orderPool.setRemark(remarkJSON);
+        //JSON remarkJSON = StringSplit.split(remark, BusiPropertyEnum.PROD_SHUTDOWN.getBusiProperty());
+        //orderPool.setRemark(remarkJSON);
         orderPoolDAO.insert(orderPool);
     }
     public void updateOrderStatus(Long orderId, Integer status, String message){
