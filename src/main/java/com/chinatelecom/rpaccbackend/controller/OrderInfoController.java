@@ -5,6 +5,8 @@ import com.chinatelecom.rpaccbackend.common.pojo.Result;
 import com.chinatelecom.rpaccbackend.pojo.vo.OrderInfoVO;
 import com.chinatelecom.rpaccbackend.service.OrderInfoService;
 import com.chinatelecom.rpaccbackend.service.OrderPoolService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,25 +16,30 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/orderinfo")
 @CrossOrigin
+@Api(tags = "工单信息")
 public class OrderInfoController {
     @Autowired
     private OrderInfoService orderInfoService;
     @Autowired
     private OrderPoolService orderPoolService;
     @GetMapping("index")
+    @ApiOperation("查询所有")
     public Result<List<OrderInfo>> orderInfoIndex(){
         return Result.ok(orderInfoService.orderInfoIndex());
     }
     @PutMapping("update")
+    @ApiOperation("更新工单备注")
     public Result<Object> updateRemark(@RequestBody OrderInfoVO orderInfoVO){
         orderInfoService.updateRemarkById(orderInfoVO.getOrderId(), orderInfoVO.getRemark());
         return Result.ok().message("更新备注成功");
     }
     @GetMapping("prodshutdown")
+    @ApiOperation("机器人产品停机取数")
     public Result<Object> shutdownInfo(){
         return Result.ok(orderInfoService.shutdownInfo());
     }
     @PostMapping("add")
+    @ApiOperation("添加订单信息接口")
     public Result<Object> orderInfoInsert(@RequestBody OrderInfoVO orderInfoVO){
         //判断工单号是否为空
         if (Objects.isNull(orderInfoVO.getOrderId())){
@@ -45,6 +52,7 @@ public class OrderInfoController {
         }
 //        System.out.println(Objects.isNull(orderInfo));
 //        System.out.println(orderInfoVO);
+        //插入OrderInfo
         orderInfo = new OrderInfo();
         orderInfo.setOrderId(orderInfoVO.getOrderId());
         orderInfo.setInitTime(orderInfoVO.getInitTime());

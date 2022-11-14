@@ -7,11 +7,13 @@ import com.chinatelecom.rpaccbackend.pojo.entity.TestDO;
 import com.chinatelecom.rpaccbackend.pojo.vo.TestVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Objects;
 
 @RestController
 @RequestMapping("/test")
+@ApiIgnore
 public class TestController {
     @Autowired
     private TestDAO testDAO;

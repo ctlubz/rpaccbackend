@@ -31,6 +31,7 @@ public class OrderPoolController {
     }
 
     @PutMapping("status")
+    @ApiOperation("更新工单状态")
     public Result<Object> updateOrderStatus(@RequestBody OrderStatusVO orderStatusVO){
         orderPoolService.updateOrderStatus(orderStatusVO.getOrderId(), orderStatusVO.getStatus(), orderStatusVO.getMessage());
         return Result.ok();
