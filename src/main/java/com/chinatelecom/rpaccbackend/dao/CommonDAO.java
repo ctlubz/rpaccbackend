@@ -15,6 +15,6 @@ public interface CommonDAO {
             "\ttb_order_pool.order_status as orderStatus,\n" +
             "\ttb_order_info.remark\n" +
             "\tFROM tb_order_info, tb_order_pool \n" +
-            "\tWHERE tb_order_info.order_id = tb_order_pool.order_id;")
+            "\tWHERE tb_order_pool.is_deleted=0 and tb_order_info.order_id = tb_order_pool.order_id;")
     List<OrderIndex> orderPoolIndex();
 }
