@@ -4,9 +4,11 @@ package com.chinatelecom.rpaccbackend.common.util;
 import com.alibaba.fastjson.JSON;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class StringSplit {
-
+    public static Pattern numberPattern = Pattern.compile(
+            "((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d)|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d))$)");
     public static ArrayList<String> splitStringByPoint(String input, ArrayList<Integer> point){
         // 暂时默认点数量 > 1
         ArrayList<String> result = new ArrayList<>();
@@ -17,7 +19,6 @@ public class StringSplit {
         result.add(input.substring(point.get(point.size() - 1)));
         return result;
     }
-
     public static JSON split(String input, List<String> targetList){
         String redundantString = ":： .。,";
         Map<String, Object> dict= new HashMap<>();

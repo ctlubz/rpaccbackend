@@ -13,8 +13,10 @@ import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
 
 @Service
 public class OrderInfoService {
@@ -52,7 +54,7 @@ public class OrderInfoService {
     public Integer insertOrderInfo(OrderInfo orderInfo){
         return orderInfoDAO.insert(orderInfo);
     }
-    public JSON shutdownInfo(){
+    public JSON shutdownInfo() throws Exception {
         // 1. 从OrderPool中选出状态为3的
         LambdaQueryWrapper<OrderPool> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(OrderPool::getOrderStatus, OrderStatusEnum.WAITING.getCode()).last("limit 1");
@@ -63,12 +65,18 @@ public class OrderInfoService {
         }
         // 2. 从OrderInfo中选出信息
         OrderInfo orderInfo = orderInfoDAO.selectById(orderPool.getOrderId());
-
+        Matcher matcher = StringSplit.numberPattern.matcher(orderInfo.getRemark());
         // 3. 往数据中添加电话号码等
         String result = orderPool.getRemark().toJSONString();
         JSONObject jsonObject = JSONObject.parseObject(result);
-        jsonObject.put("业务号码", orderInfo.getCustomerNumber());
-        jsonObject.put("归属本地网", "西安本地网");
+        if(matcher.find()){
+            jsonObject.put("业务号码", matcher.group());
+        }
+        else{
+            throw new Exception("没有业务号码");
+        }
+        jsonObject.put("归属本地网", "铜川本地网");
+        jsonObject.put("业务类型", "套餐停机");
         // @TODO 4. 更改订单状态为执行中
         return jsonObject;
     }

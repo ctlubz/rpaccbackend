@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.regex.Matcher;
+
 @SpringBootTest
 class RpacCbackendApplicationTests {
     @Autowired
@@ -29,6 +31,12 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void jsonTest(){
-        System.out.println(commonDAO.orderPoolIndex());
+        String input = "13369159060 17782962560归属本地网 停机类型：违章停机 停机子类型：无 停机备注：无";
+        Matcher matcher = StringSplit.numberPattern.matcher(input);
+        if(matcher.find()){
+            System.out.println(matcher.group());
+        }
+        input = matcher.replaceAll("");
+        System.out.println(input);
     }
 }

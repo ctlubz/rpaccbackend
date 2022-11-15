@@ -36,7 +36,7 @@ public class OrderInfoController {
     }
     @GetMapping("prodshutdown")
     @ApiOperation("机器人产品停机取数")
-    public Result<Object> shutdownInfo(){
+    public Result<Object> shutdownInfo() throws Exception {
         return Result.ok(orderInfoService.shutdownInfo());
     }
     @PostMapping("add")
@@ -64,6 +64,7 @@ public class OrderInfoController {
         }
         Integer result = orderInfoService.insertOrderInfo(orderInfo);
         if(result != 0){
+            System.out.println("口气");
             orderPoolService.insertOrderPool(orderInfo.getOrderId(), orderInfo.getRemark(), orderInfo.getBusiType());
             return Result.ok(result);
         }
