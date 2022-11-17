@@ -1,9 +1,6 @@
 package com.chinatelecom.rpaccbackend.service;
 
-import com.alibaba.fastjson.JSON;
-import com.chinatelecom.rpaccbackend.common.pojo.BusiPropertyEnum;
 import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
-import com.chinatelecom.rpaccbackend.common.util.StringSplit;
 import com.chinatelecom.rpaccbackend.dao.OrderHistoryDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderLogDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
@@ -12,7 +9,9 @@ import com.chinatelecom.rpaccbackend.pojo.entity.OrderLog;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +34,8 @@ public class OrderPoolService {
         //orderPool.setRemark(remarkJSON);
         orderPoolDAO.insert(orderPool);
     }
-    public void updateOrderStatus(Long orderId, Integer status, String message){
+    @Transactional
+    public void updateOrderStatus(Long orderId, Integer status, String message) throws IOException {
         // @TODO 事务回滚
         // 1. 找出订单
         OrderPool orderPool = orderPoolDAO.selectById(orderId);
@@ -45,11 +45,23 @@ public class OrderPoolService {
         }
         orderPool.setOrderStatus(status);
         // 2. 订单状态是否为200，是200插入历史工单池
-        if(Objects.equals(status, OrderStatusEnum.FINISH.getCode())){
+
+        switch (status){
+            case 200:   //SUCCESS   机器人执行成功等待回单
+                // 1. 记录log 2. 更新状态和状态信息 3.
+                break;
+            case 201:   //EXCEPTION 机器人执行异常，等待修改数据
+
+                break;
+            default:
+                throw new IOException();
+        }
+
+        if(Objects.equals(status, OrderStatusEnum.SUCCESS.getCode())){
             OrderHistory orderHistory= new OrderHistory();
             orderHistory.setOrderId(orderId);
             orderHistory.setRemark(orderPool.getRemark());
-            orderHistory.setOrderStatus(OrderStatusEnum.FINISH.getCode());
+            orderHistory.setOrderStatus(OrderStatusEnum.SUCCESS.getCode());
             orderHistory.setAutomatic(orderPool.getAutomatic());
             //如果历史库插入成功，逻辑删除OrderPool的订单
             if(orderHistoryDAO.insert(orderHistory) != 0){
