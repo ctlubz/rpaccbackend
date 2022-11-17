@@ -11,26 +11,28 @@ import java.util.Date;
 @TableName(value = "tb_order_pool", autoResultMap = true)
 public class OrderPool {
     @TableId
-    public Long orderId;
+    private Long orderId;
     @TableField("order_status")
-    public Integer orderStatus;
+    private Integer orderStatus;
     @TableField(value = "remark", typeHandler = FastjsonTypeHandler.class)
-    public JSON remark;
+    private JSON remark;
     @TableField("user_id")
-    public String userId;
+    private String userId;
     @TableField("lock_time")
-    public Date lockTime;
+    private Date lockTime;
     @TableField("robot_id")
-    public Date robotId;
+    private Date robotId;
     @TableField("is_automatic")
-    public Integer automatic;
+    private Integer automatic;
     @TableField("have_sub_order")
-    public Integer haveSubOrder;
+    private Integer haveSubOrder;
+    @TableField("message")
+    private String message;
     @TableField(value = "create_time", fill = FieldFill.INSERT)
-    public Date createTime;
+    private Date createTime;
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
-    public Date updateTime;
+    private Date updateTime;
     @TableLogic
     @TableField("is_deleted")
-    public Integer deleted;
+    private Integer deleted;
 }
