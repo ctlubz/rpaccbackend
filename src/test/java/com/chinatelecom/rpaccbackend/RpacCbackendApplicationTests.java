@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,9 +27,7 @@ class RpacCbackendApplicationTests {
     private OrderPoolDAO orderPoolDAO;
     @Test
     void contextLoads() {
-        String testString =
-                "归属本地网 停机类型：违章停机 停机子类型：无 停机备注：无";
-        System.out.println(StringSplit.split(testString, BusiPropertyEnum.PROD_SHUTDOWN.getBusiProperty()));
+
     }
     @Test
     void jsonTest(){
