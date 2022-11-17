@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 
 @RestController
@@ -35,5 +37,10 @@ public class TestController {
         testDO.setUsername((JSON) JSON.parse("{'123':'45', '545':'asd'}"));
         testDAO.updateById(testDO);
         return Result.ok(testDO);
+    }
+    @GetMapping("boolean")
+    public Result<Object> testBoolean(@RequestBody LinkedHashMap<String, Integer> orderId) throws IOException {
+        System.out.println(orderId.get("orderId"));
+        return Result.ok(orderId);
     }
 }
