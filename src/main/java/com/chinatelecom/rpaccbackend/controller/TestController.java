@@ -2,7 +2,9 @@ package com.chinatelecom.rpaccbackend.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.chinatelecom.rpaccbackend.common.pojo.Result;
+import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
 import com.chinatelecom.rpaccbackend.dao.TestDAO;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderIgnore;
 import com.chinatelecom.rpaccbackend.pojo.entity.TestDO;
 import com.chinatelecom.rpaccbackend.pojo.vo.TestVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import java.util.Objects;
 public class TestController {
     @Autowired
     private TestDAO testDAO;
+    @Autowired
+    private OrderIgnoreDAO orderIgnoreDAO;
     @GetMapping
     public Result<Object> testController(){
         return Result.ok("Hello");
@@ -39,8 +43,8 @@ public class TestController {
         return Result.ok(testDO);
     }
     @GetMapping("boolean")
-    public Result<Object> testBoolean(@RequestBody LinkedHashMap<String, Integer> orderId) throws IOException {
-        System.out.println(orderId.get("orderId"));
-        return Result.ok(orderId);
+    public Result<Integer> testBoolean(@RequestBody LinkedHashMap<String, Integer> requestBody) throws IOException {
+        OrderIgnore orderIgnore = orderIgnoreDAO.selectById(requestBody.get("orderId"));
+        return Result.ok(Objects.isNull(orderIgnore) ? 0 : 1);
     }
 }
