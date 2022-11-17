@@ -15,8 +15,8 @@ import java.util.Date;
 public class OrderHistory {
     @TableId
     private Long orderId;
-    @TableField("busi_type")
-    private String busiType;
+    @TableField("buis_type")
+    private String buisType;
     @TableField(value = "remark", typeHandler = FastjsonTypeHandler.class)
     private JSON remark;
     @TableField("order_status")

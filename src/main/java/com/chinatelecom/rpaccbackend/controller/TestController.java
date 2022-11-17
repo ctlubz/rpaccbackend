@@ -44,7 +44,6 @@ public class TestController {
     }
     @GetMapping("boolean")
     public Result<Integer> testBoolean(@RequestBody LinkedHashMap<String, Integer> requestBody) throws IOException {
-        OrderIgnore orderIgnore = orderIgnoreDAO.selectById(requestBody.get("orderId"));
-        return Result.ok(Objects.isNull(orderIgnore) ? 0 : 1);
+        return Result.ok();
     }
 }

@@ -9,8 +9,9 @@ public enum OrderStatusEnum {
     UNCOMMITTED(2,"未提交"),
     WAITING(3, "等待执行"),
     EXECUTING(4, "执行中"),
-    FINISH(200, "工单完成"),
-    EXCEPTION(201, "工单异常")
+    SUCCESS(200, "工单完成，等待回单"),
+    EXCEPTION(201, "工单异常"),
+    HISTORY(255,"订单完全完成")
     ;
     private final Integer code;
     private final String description;
