@@ -1,10 +1,10 @@
 package com.chinatelecom.rpaccbackend.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.chinatelecom.rpaccbackend.common.pojo.Result;
 import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
 import com.chinatelecom.rpaccbackend.dao.TestDAO;
-import com.chinatelecom.rpaccbackend.pojo.entity.OrderIgnore;
 import com.chinatelecom.rpaccbackend.pojo.entity.TestDO;
 import com.chinatelecom.rpaccbackend.pojo.vo.TestVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.Objects;
 
 @RestController
@@ -42,8 +41,9 @@ public class TestController {
         testDAO.updateById(testDO);
         return Result.ok(testDO);
     }
-    @GetMapping("boolean")
-    public Result<Integer> testBoolean(@RequestBody LinkedHashMap<String, Integer> requestBody) throws IOException {
-        return Result.ok();
+    @PostMapping("boolean")
+    public Result<Object> testBoolean(@RequestBody String body) throws Exception {
+        JSONObject jsonObject = (JSONObject) JSONObject.parse(body);
+        return Result.ok(jsonObject.get("orderId"));
     }
 }
