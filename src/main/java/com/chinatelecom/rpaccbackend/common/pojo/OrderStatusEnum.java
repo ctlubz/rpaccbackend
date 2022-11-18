@@ -11,8 +11,8 @@ public enum OrderStatusEnum {
     EXECUTING(4, "执行中"),
     SUCCESS(200, "工单完成，等待回单"),
     EXCEPTION(201, "工单异常"),
-    IGNORE(254, "无法机器人执行，添加Ignore"),
-    HISTORY(255,"工单完全完成")
+    IGNORE(254, "无法机器人执行，添加Ignore，记录History"),
+    HISTORY(255,"工单完全完成，记录History")
     ;
     private final Integer code;
     private final String description;
