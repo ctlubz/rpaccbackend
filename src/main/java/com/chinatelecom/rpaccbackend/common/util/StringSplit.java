@@ -4,11 +4,30 @@ package com.chinatelecom.rpaccbackend.common.util;
 import com.alibaba.fastjson.JSON;
 
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringSplit {
     public static Pattern numberPattern = Pattern.compile(
             "((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d)|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d))$)");
+
+    // 1. 得到业务类型
+    // 匹配最后一个大括号内容
+    public static String lastContext(String input, boolean isContext){
+        String regex = isContext ? "\\{[^}]*}" : "【[^}]*】";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        String result = null;
+        while(matcher.find()){
+            result = matcher.group(matcher.groupCount());
+        }
+        if(Objects.isNull(result)){
+            return null;
+        }
+        return (String) result.subSequence(1, result.length()-1);
+    }
+
+
     public static ArrayList<String> splitStringByPoint(String input, ArrayList<Integer> point){
         // 暂时默认点数量 > 1
         ArrayList<String> result = new ArrayList<>();

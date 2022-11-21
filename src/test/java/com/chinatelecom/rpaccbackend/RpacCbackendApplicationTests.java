@@ -1,19 +1,16 @@
 package com.chinatelecom.rpaccbackend;
 
-import com.chinatelecom.rpaccbackend.common.pojo.BusiPropertyEnum;
+import com.chinatelecom.rpaccbackend.common.util.BusinessUtil;
 import com.chinatelecom.rpaccbackend.dao.CommonDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
 import com.chinatelecom.rpaccbackend.dao.TestDAO;
-import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Date;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @SpringBootTest
 class RpacCbackendApplicationTests {
@@ -43,11 +40,6 @@ class RpacCbackendApplicationTests {
     void splitTest(){
         String testStr = "业务备注：【其它业务内容补充】：{测试},【套餐停机】：" +
                 "{业务号码：15353715917|停机类型：预拆机停机/无需求|联系人：马萍},";
-
-        Pattern p = Pattern.compile("\\{([^}]*)}");
-        Matcher m = p.matcher(testStr);
-        while(m.find()){
-            System.out.println(m.group());
-        }
+        System.out.println(BusinessUtil.businessRemark(testStr));
     }
 }

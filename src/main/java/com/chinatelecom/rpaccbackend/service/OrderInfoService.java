@@ -3,7 +3,7 @@ package com.chinatelecom.rpaccbackend.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.chinatelecom.rpaccbackend.common.pojo.BusiPropertyEnum;
+import com.chinatelecom.rpaccbackend.common.pojo.BusinessPropertyEnum;
 import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
 import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
@@ -13,7 +13,6 @@ import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -43,7 +42,7 @@ public class OrderInfoService {
         // 2. 更新OrderInfo订单备注
         orderInfo.setRemark(remark);
         // 3. 更新OrderPool的remark、order_status为等待执行
-        JSON remarkJSON = StringSplit.split(remark, BusiPropertyEnum.PROD_SHUTDOWN.getBusiProperty());
+        JSON remarkJSON = StringSplit.split(remark, BusinessPropertyEnum.PROD_SHUTDOWN.getBusiProperty());
         orderPool.setRemark(remarkJSON);
         orderPool.setOrderStatus(OrderStatusEnum.WAITING.getCode());
         orderInfoDAO.updateById(orderInfo);
