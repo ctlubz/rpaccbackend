@@ -41,9 +41,9 @@ public class TestController {
         testDAO.updateById(testDO);
         return Result.ok(testDO);
     }
-    @PostMapping("boolean")
-    public Result<Object> testBoolean(@RequestBody String body) throws Exception {
-        JSONObject jsonObject = (JSONObject) JSONObject.parse(body);
-        return Result.ok(jsonObject.get("orderId"));
+    @GetMapping("boolean")
+    public Result<Object> testBoolean(@RequestParam Integer orderId) throws Exception {
+
+        return Result.ok(orderId);
     }
 }
