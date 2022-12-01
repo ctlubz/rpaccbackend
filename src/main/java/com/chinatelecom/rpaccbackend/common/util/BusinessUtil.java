@@ -19,8 +19,9 @@ public class BusinessUtil {
     public static JSONObject businessRemark(String inputStr){
         // 业务类型
         String businessType = StringSplit.lastContext(inputStr, false);
-        if(Objects.isNull(businessType) || !businessTypeList.contains(businessType)){   // 为空或者不支持
-            return null;
+        JSONObject businessFactorJson = (JSONObject) JSONObject.parse(JsonUtil.readJsonFile("src/main/resources/config/BusinessFactorConfig.json"));
+        if(Objects.isNull(businessType) || !businessFactorJson.containsKey(businessType)){   // 为空或者不支持
+             return null;
         }
         // 业务备注
         String context = StringSplit.lastContext(inputStr, true);   // 为空
@@ -29,16 +30,17 @@ public class BusinessUtil {
         }
         String[] contextList = context.split("\\|");
         JSONObject result = new JSONObject();
-        JSONObject splitByDivideJson = (JSONObject) JSONObject.parse(splitByDivide);
-        JSONObject businessFactorJson = (JSONObject) JSONObject.parse(businessFactor);
+        JSONObject splitByDivideJson = (JSONObject) JSONObject.parse(JsonUtil.readJsonFile("src/main/resources/config/BusinessDivideConfig.json"));
         JSONArray businessFactorList = businessFactorJson.getJSONArray(businessType);
         for (String s : contextList){
             int middle = s.indexOf('：');
             String key = s.substring(0, middle);
+            // 去掉key中的空格
+            key = key.replace(" ", "");
             if(!businessFactorList.contains(key)){
                 continue;
             }
-            String value = s.substring(middle+1);
+            String value = s.substring(middle + 1);
             //如果需要二次分割
             if(splitByDivideJson.containsKey(key)){
                 JSONArray jsonArray = splitByDivideJson.getJSONArray(key);
