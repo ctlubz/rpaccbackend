@@ -61,8 +61,8 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void splitTest(){
-        System.out.println(newStr);
-        System.out.println(BusinessUtil.businessRemark(newStr));
+//        System.out.println(packageStr);
+        System.out.println(BusinessUtil.businessRemark(packageStr));
     }
     @Test
     void readJsonTest(){
