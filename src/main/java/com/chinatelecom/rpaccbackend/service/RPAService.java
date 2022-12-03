@@ -48,12 +48,14 @@ public class RPAService {
      * RPA添加工单接口
      * */
     public void addOrder(OrderInfoVO orderInfoVO){
-        // 1.
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderId(orderInfoVO.getOrderId());
         orderInfo.setInitTime(orderInfoVO.getInitTime());
         if(!Objects.isNull(orderInfoVO.getCustomerNumber())) {
             orderInfo.setCustomerNumber(orderInfoVO.getCustomerNumber());
+        }
+        if(!Objects.isNull(orderInfoVO.getLocalNet())){
+            orderInfo.setLocalNet(orderInfoVO.getLocalNet());
         }
         orderInfo.setRemark(orderInfoVO.getRemark());
         orderInfoDAO.insert(orderInfo);
@@ -62,7 +64,6 @@ public class RPAService {
         if(Objects.isNull(remark)){
             remark = orderInfoVO.getRemark();
         }
-        OrderPool orderPool = new OrderPool(orderInfoVO.getOrderId(), businessType, remark);
-        orderPoolDAO.insert(orderPool);
+        orderPoolDAO.insertByParam(orderInfoVO.getOrderId().toString(), businessType, remark);
     }
 }
