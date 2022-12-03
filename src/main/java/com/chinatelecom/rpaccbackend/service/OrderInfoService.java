@@ -43,7 +43,7 @@ public class OrderInfoService {
         orderInfo.setRemark(remark);
         // 3. 更新OrderPool的remark、order_status为等待执行
         JSON remarkJSON = StringSplit.split(remark, BusinessPropertyEnum.PROD_SHUTDOWN.getBusiProperty());
-        orderPool.setRemark(remarkJSON);
+        orderPool.setRemark(remarkJSON.toString());
         orderPool.setOrderStatus(OrderStatusEnum.WAITING.getCode());
         orderInfoDAO.updateById(orderInfo);
         orderPoolDAO.updateById(orderPool);
@@ -66,7 +66,7 @@ public class OrderInfoService {
         OrderInfo orderInfo = orderInfoDAO.selectById(orderPool.getOrderId());
         Matcher matcher = StringSplit.numberPattern.matcher(orderInfo.getRemark());
         // 3. 往数据中添加电话号码等
-        String result = orderPool.getRemark().toJSONString();
+        String result = orderPool.getRemark();
         JSONObject jsonObject = JSONObject.parseObject(result);
         if(matcher.find()){
             jsonObject.put("业务号码", matcher.group());

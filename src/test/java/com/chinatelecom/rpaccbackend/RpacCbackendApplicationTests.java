@@ -61,7 +61,9 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void splitTest(){
+        String testStr = "aaa";
 //        System.out.println(packageStr);
+        System.out.println(Objects.isNull(StringSplit.lastContext(testStr, true)));
         System.out.println(BusinessUtil.businessRemark(packageStr));
     }
     @Test

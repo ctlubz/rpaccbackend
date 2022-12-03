@@ -14,8 +14,10 @@ public class OrderPool {
     private Long orderId;
     @TableField("order_status")
     private Integer orderStatus;
+    @TableField("busi_type")
+    private String busiType;
     @TableField(value = "remark", typeHandler = FastjsonTypeHandler.class)
-    private JSON remark;
+    private String remark;
     @TableField("user_id")
     private String userId;
     @TableField("lock_time")
@@ -35,4 +37,12 @@ public class OrderPool {
     @TableLogic
     @TableField("is_deleted")
     private Integer deleted;
+    public OrderPool(Long orderId, String busiType, String remark){
+        this.orderId = orderId;
+        this.busiType = busiType;
+        this.remark = remark;
+    }
+    public OrderPool(){
+
+    }
 }

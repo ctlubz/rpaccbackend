@@ -14,6 +14,7 @@ public class StringSplit {
     // 1. 得到业务类型
     // 匹配最后一个大括号内容
     public static String lastContext(String input, boolean isContext){
+        // true匹配大括号、false匹配中括号
         String regex = isContext ? "\\{[^}]*}" : "【[^}]*】";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);

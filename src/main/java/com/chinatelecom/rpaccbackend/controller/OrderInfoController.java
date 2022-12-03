@@ -64,7 +64,6 @@ public class OrderInfoController {
         }
         Integer result = orderInfoService.insertOrderInfo(orderInfo);
         if(result != 0){
-            System.out.println("口气");
             orderPoolService.insertOrderPool(orderInfo.getOrderId(), orderInfo.getRemark(), orderInfo.getBusiType());
             return Result.ok(result);
         }
