@@ -5,10 +5,7 @@ import com.chinatelecom.rpaccbackend.dao.OrderHistoryDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderLogDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
-import com.chinatelecom.rpaccbackend.pojo.entity.OrderHistory;
-import com.chinatelecom.rpaccbackend.pojo.entity.OrderIgnore;
-import com.chinatelecom.rpaccbackend.pojo.entity.OrderLog;
-import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
+import com.chinatelecom.rpaccbackend.pojo.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +26,6 @@ public class OrderPoolService {
         this.orderLogDAO = orderLogDAO;
         this.orderPoolDAO = orderPoolDAO;
     }
-
     public List<OrderPool> orderPoolIndex(){
         return orderPoolDAO.selectList(null);
     }

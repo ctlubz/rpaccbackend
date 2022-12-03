@@ -46,6 +46,10 @@ class RpacCbackendApplicationTests {
         System.out.println(tempList.length);
     }
     @Test
+    void xmlTest(){
+        System.out.println(orderPoolDAO.insertByParam("1234", "123", "aaa"));
+    }
+    @Test
     void jsonTest(){
         JSONObject splitByDivideJson = (JSONObject) JSONObject.parse(splitByDivide);
         JSONArray jsonArray = splitByDivideJson.getJSONArray("停机类型");
@@ -61,10 +65,8 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void splitTest(){
-        String testStr = "aaa";
-//        System.out.println(packageStr);
-        System.out.println(Objects.isNull(StringSplit.lastContext(testStr, true)));
-        System.out.println(BusinessUtil.businessRemark(packageStr));
+        System.out.println(StringSplit.lastContext(shutdownStr, true));
+//        System.out.println(BusinessUtil.businessRemark(shutdownStr));
     }
     @Test
     void readJsonTest(){
