@@ -30,8 +30,8 @@ public class OrderInfoController {
     }
     @PutMapping("update")
     @ApiOperation("更新工单备注")
-    public Result<Object> updateRemark(@RequestBody UpdateRemarkVO updateRemarkVO){
-        orderInfoService.updateRemarkById(updateRemarkVO.getOrderId(), updateRemarkVO.getRemark());
+    public Result<Object> updateRemark(@RequestBody UpdateRemarkVO updateRemarkVO) throws Exception{
+        orderInfoService.updateRemarkById(updateRemarkVO);
         return Result.ok().message("更新备注成功");
     }
     @GetMapping("prodshutdown")

@@ -8,7 +8,8 @@
             tb_order_info.init_time as initTime,
             tb_order_info.customer_number as customerNumber,
             tb_order_pool.order_status as orderStatus,
-            tb_order_pool.remark
+            tb_order_pool.remark,
+            tb_order_pool.busi_type as busiType
             FROM tb_order_info, tb_order_pool
             WHERE tb_order_pool.is_deleted=0 and tb_order_info.order_id = tb_order_pool.order_id;
     </select>

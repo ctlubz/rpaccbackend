@@ -6,4 +6,5 @@ import lombok.Data;
 public class UpdateRemarkVO {
     private Long orderId;
     private String remark;
+    private String busiType;
 }

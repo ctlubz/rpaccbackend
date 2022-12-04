@@ -8,7 +8,7 @@ import java.util.Date;
 public class OrderIndex {
     private Long orderId;
     private Date initTime;
-    private String customerNumber;
+    private String busiType;
     private Integer orderStatus;
     private String remark;
 }
