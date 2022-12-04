@@ -3,6 +3,7 @@ package com.chinatelecom.rpaccbackend.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.chinatelecom.rpaccbackend.common.handler.BusinessException;
 import com.chinatelecom.rpaccbackend.common.pojo.BusinessPropertyEnum;
 import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
@@ -32,23 +33,13 @@ public class OrderInfoService {
         return orderInfoDAO.selectById(id);
     }
     public void updateRemarkById(Long id, String remark){
-        //@TODO 事务回滚
-        // 1. 根据id筛选出OrderInfo，OrderPool订单
-        OrderInfo orderInfo = orderInfoDAO.selectById(id);
-        if(Objects.isNull(orderInfo)){
-            return;
-        }
+        // 1. 根据id筛选出OrderPool订单
         OrderPool orderPool = orderPoolDAO.selectById(id);
-        // 2. 更新OrderInfo订单备注
-        orderInfo.setRemark(remark);
-        // 3. 更新OrderPool的remark、order_status为等待执行
-        JSON remarkJSON = StringSplit.split(remark, BusinessPropertyEnum.PROD_SHUTDOWN.getBusiProperty());
-        orderPool.setRemark(remarkJSON.toString());
+        // 2. 更新OrderPool的remark、order_status为等待执行
+        orderPool.setRemark(remark);
         orderPool.setOrderStatus(OrderStatusEnum.WAITING.getCode());
-        orderInfoDAO.updateById(orderInfo);
         orderPoolDAO.updateById(orderPool);
         // @TODO 4. 打给机器人
-
     }
     public Integer insertOrderInfo(OrderInfo orderInfo){
         return orderInfoDAO.insert(orderInfo);

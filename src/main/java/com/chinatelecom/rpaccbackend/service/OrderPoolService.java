@@ -1,13 +1,13 @@
 package com.chinatelecom.rpaccbackend.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.chinatelecom.rpaccbackend.common.handler.BusinessException;
 import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.dao.OrderHistoryDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderLogDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
 import com.chinatelecom.rpaccbackend.pojo.entity.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,16 +33,9 @@ public class OrderPoolService {
     public void insertOrderPool(Long orderId, String remark, String busiType){
         OrderPool orderPool = new OrderPool();
         orderPool.setOrderId(orderId);
-        //JSON remarkJSON = StringSplit.split(remark, BusiPropertyEnum.PROD_SHUTDOWN.getBusiProperty());
-        //orderPool.setRemark(remarkJSON);
         orderPoolDAO.insert(orderPool);
     }
-    public OrderPool selectOneCanUse() {
-        LambdaQueryWrapper<OrderPool> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(OrderPool::getOrderStatus, OrderStatusEnum.WAITING.getCode())
-                .last("limit 1");
-        return orderPoolDAO.selectOne(lambdaQueryWrapper);
-    }
+
     @Transactional
     public void updateOrderStatus(Long orderId, Integer status, String message) throws IOException {
         // 1. 找出订单
@@ -90,7 +83,7 @@ public class OrderPoolService {
                 orderPoolDAO.deleteById(orderId);
                 break;
             default:
-                throw new IOException();
+                throw new BusinessException("非法工单状态");
         }
     }
 
