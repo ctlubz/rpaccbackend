@@ -2,6 +2,7 @@ package com.chinatelecom.rpaccbackend.common.handler;
 
 import com.chinatelecom.rpaccbackend.common.pojo.Result;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -39,9 +40,12 @@ public class GlobalExceptionAdvice {
         e.printStackTrace();
         return Result.fail().message("请求头数据格式不准确，请更正重试");
     }
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public Result<Object> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e){
+        return Result.fail().message("请求方法(Method)错误");
+    }
     @ExceptionHandler(BusinessException.class)
     public Result<Object> businessException(BusinessException e){
-        e.printStackTrace();
         return Result.fail().message(e.getErrorMessage());
     }
 }
