@@ -79,11 +79,11 @@ public class RPAService {
         }
         OrderInfo orderInfo = orderInfoDAO.selectById(orderPool.getOrderId());
         JSONObject result = new JSONObject();
-        result.put("orderId", orderPool.getOrderId());
+        result.put("工单号", orderPool.getOrderId());
         result.put("业务类型", orderPool.getBusiType());
         result.put("归属本地网", orderInfo.getLocalNet());
         JSONObject businessRemark = BusinessUtil.parseRemark(orderPool.getRemark(), orderPool.getBusiType());
-        result.put("备注", businessRemark);
+        result.putAll(businessRemark);
         return result;
     }
 }

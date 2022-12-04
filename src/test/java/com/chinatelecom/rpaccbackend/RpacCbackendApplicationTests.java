@@ -57,17 +57,23 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void jsonTest(){
-        JSONObject splitByDivideJson = (JSONObject) JSONObject.parse(splitByDivide);
-        JSONArray jsonArray = splitByDivideJson.getJSONArray("停机类型");
-        String str = "预拆机停机/无需求";
-        String[] tempList = str.split("/");
-        System.out.println(Objects.equals(tempList.length, jsonArray.size()));
-        JSONObject result = new JSONObject();
-        for(int i = 0; i < jsonArray.size(); i++){
-//            System.out.println(i + " : " + jsonArray.get(i));
-            result.put(jsonArray.get(i).toString(), i);
-        }
-        System.out.println(result);
+        String jsonStr = "{\n" +
+                "    \"业务类型\": \"套餐停机\",\n" +
+                "    \"orderId\": 7176220,\n" +
+                "    \"归属本地网\": \"西安本地网\",\n" +
+                "    \"备注\": {\n" +
+                "        \"业务号码\": \"15353715917\",\n" +
+                "        \"停机类型\": \"预拆机停机\",\n" +
+                "        \"停机子类型\": \"无需求\",\n" +
+                "        \"test\":[1,2]\n" +
+                "    }\n" +
+                "}";
+        JSONObject jsonObject = (JSONObject) JSONObject.parse(jsonStr);
+        JSONObject remarkObject = jsonObject.getJSONObject("备注");
+        jsonObject.putAll(remarkObject);
+        jsonObject.remove("备注");
+        System.out.println(jsonObject);
+//        System.out.println(remarkObject);
     }
     @Test
     void splitTest() throws Exception {

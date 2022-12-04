@@ -2,6 +2,7 @@ package com.chinatelecom.rpaccbackend.common.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.chinatelecom.rpaccbackend.common.handler.BusinessException;
 import com.chinatelecom.rpaccbackend.service.OrderPoolService;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,7 @@ public class BusinessUtil {
                 result = shutdownSplit(remark, factorArray);
                 break;
             default:
-                throw new IOException();
+                throw new BusinessException("未知业务动作或者");
         }
         return result;
     }
