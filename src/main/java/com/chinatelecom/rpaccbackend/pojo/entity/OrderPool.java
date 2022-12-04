@@ -16,7 +16,8 @@ public class OrderPool {
     private Integer orderStatus;
     @TableField("busi_type")
     private String busiType;
-    @TableField(value = "remark", typeHandler = FastjsonTypeHandler.class)
+//    @TableField(value = "remark", typeHandler = FastjsonTypeHandler.class)
+    @TableField(value = "remark")
     private String remark;
     @TableField("user_id")
     private String userId;
