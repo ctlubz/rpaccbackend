@@ -1,5 +1,6 @@
 package com.chinatelecom.rpaccbackend.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chinatelecom.rpaccbackend.common.pojo.Result;
 import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderIgnore;
@@ -36,7 +37,7 @@ public class RPAController {
         return Result.ok(rpaService.feedbackService());
     }
     @PostMapping("add")
-    @ApiOperation("添加订单")
+    @ApiOperation("添加工单")
     public Result<Object> addOrder(@RequestBody OrderInfoVO orderInfoVO){
         //判断工单号是否为空
         if (Objects.isNull(orderInfoVO.getOrderId())){
@@ -49,5 +50,10 @@ public class RPAController {
         }
         rpaService.addOrder(orderInfoVO);
         return Result.ok();
+    }
+    @PostMapping("get")
+    @ApiOperation("获取可执行工单")
+    public Result<JSONObject> getOrder() throws Exception {
+        return Result.ok(rpaService.getOrder());
     }
 }

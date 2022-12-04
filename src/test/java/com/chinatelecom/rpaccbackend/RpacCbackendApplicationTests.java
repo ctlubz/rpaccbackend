@@ -9,6 +9,8 @@ import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
 import com.chinatelecom.rpaccbackend.dao.TestDAO;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
+import com.chinatelecom.rpaccbackend.service.OrderPoolService;
+import com.chinatelecom.rpaccbackend.service.RPAService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +27,10 @@ class RpacCbackendApplicationTests {
     private OrderInfoDAO orderInfoDAO;
     @Autowired
     private TestDAO testDAO;
+    @Autowired
+    private OrderPoolService orderPoolService;
+    @Autowired
+    private RPAService rpaService;
     @Autowired
     private CommonDAO commonDAO;
     @Autowired
@@ -46,8 +52,8 @@ class RpacCbackendApplicationTests {
         System.out.println(tempList.length);
     }
     @Test
-    void xmlTest(){
-        System.out.println(orderPoolDAO.insertByParam("1234", "123", "aaa"));
+    void xmlTest() throws Exception {
+        System.out.println(rpaService.getOrder());
     }
     @Test
     void jsonTest(){
@@ -64,9 +70,9 @@ class RpacCbackendApplicationTests {
         System.out.println(result);
     }
     @Test
-    void splitTest(){
-        System.out.println(StringSplit.lastContext(shutdownStr, true));
-//        System.out.println(BusinessUtil.businessRemark(shutdownStr));
+    void splitTest() throws Exception {
+        String testStr = "业务号码：15353715917|停机类型：预拆机停机/无需求|联系人：马萍";
+        System.out.println(BusinessUtil.parseRemark(testStr, "套餐停机"));
     }
     @Test
     void readJsonTest(){

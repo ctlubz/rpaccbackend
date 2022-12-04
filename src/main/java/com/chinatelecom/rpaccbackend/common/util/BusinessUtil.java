@@ -7,15 +7,11 @@ import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.*;
 
 @Component
 public class BusinessUtil {
-    private static final String splitByDivide = "{\"停机类型\": [\"停机类型\", \"停机子类型\"]}";
-    private static final String businessFactor = "{\"套餐停机\": [\"业务号码\", \"停机类型\"]}";
-    @Autowired
-    private OrderPoolService orderPoolService;
-    private static final Set<String> businessTypeList = Sets.newHashSet("套餐停机");
     public static JSONObject businessRemark(String inputStr){
         // 业务类型
         String businessType = StringSplit.lastContext(inputStr, false);
@@ -59,4 +55,46 @@ public class BusinessUtil {
         }
         return result;
     }
+
+    public static JSONObject parseRemark(String remark, String businessType) throws Exception{
+        JSONObject businessFactorJson = (JSONObject) JSONObject.parse(JsonUtil.readJsonFile("src/main/resources/config/BusinessFactorConfig.json"));
+        if(!businessFactorJson.containsKey(businessType)){
+            return null;
+        }
+        JSONArray factorArray = businessFactorJson.getJSONArray(businessType);
+        JSONObject result = null;
+        switch (businessType){
+            case "套餐停机":
+                result = shutdownSplit(remark, factorArray);
+                break;
+            default:
+                throw new IOException();
+        }
+        return result;
+    }
+    public static JSONObject shutdownSplit(String remark, JSONArray factorArray){
+        JSONObject result = new JSONObject();
+        String[] factorList = remark.split("\\|");
+        for(String s : factorList){
+            int middle = s.indexOf('：');    // 根据：分割
+            String key = s.substring(0, middle);    // 取key
+            key = key.replace(" ", ""); // 去掉key中空格
+            if(!factorArray.contains(key)){ // 如果不是业务需要的元素直接下一步
+                continue;
+            }
+            String value = s.substring(middle + 1); // 取值
+            if(key.equals("停机类型")){ // 如果是停机类型需要进一步划分
+                String[] tempList = value.split("/");
+                result.put("停机类型", tempList[0]);
+                if(tempList.length == 2){
+                    result.put("停机子类型", tempList[1]);
+                }
+            }
+            else {
+                result.put(key, value);
+            }
+        }
+        return result;
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.chinatelecom.rpaccbackend.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
+import com.chinatelecom.rpaccbackend.common.util.BusinessUtil;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
 import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
@@ -27,6 +29,7 @@ public class RPAService {
     }
     /**
      * RPA取可以返回给中台的工单
+     * 取一个状态为200或者201的订单
      * */
     public HashMap<String, Object> feedbackService(){
         HashMap<String, Object> result = new HashMap<>();
@@ -65,5 +68,22 @@ public class RPAService {
             remark = orderInfoVO.getRemark();
         }
         orderPoolDAO.insertByParam(orderInfoVO.getOrderId().toString(), businessType, remark);
+    }
+    /**
+     * 机器人取工单接口
+     * */
+    public JSONObject getOrder() throws Exception {
+        OrderPool orderPool = orderPoolDAO.selectByStatus(String.valueOf(OrderStatusEnum.WAITING.getCode()));
+        if(Objects.isNull(orderPool)){  //没有工单
+            return null;
+        }
+        OrderInfo orderInfo = orderInfoDAO.selectById(orderPool.getOrderId());
+        JSONObject result = new JSONObject();
+        result.put("orderId", orderPool.getOrderId());
+        result.put("业务类型", orderPool.getBusiType());
+        result.put("归属本地网", orderInfo.getLocalNet());
+        JSONObject businessRemark = BusinessUtil.parseRemark(orderPool.getRemark(), orderPool.getBusiType());
+        result.put("备注", businessRemark);
+        return result;
     }
 }

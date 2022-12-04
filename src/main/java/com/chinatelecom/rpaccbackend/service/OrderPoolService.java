@@ -1,5 +1,6 @@
 package com.chinatelecom.rpaccbackend.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.dao.OrderHistoryDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
@@ -36,6 +37,12 @@ public class OrderPoolService {
         //orderPool.setRemark(remarkJSON);
         orderPoolDAO.insert(orderPool);
     }
+    public OrderPool selectOneCanUse() {
+        LambdaQueryWrapper<OrderPool> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(OrderPool::getOrderStatus, OrderStatusEnum.WAITING.getCode())
+                .last("limit 1");
+        return orderPoolDAO.selectOne(lambdaQueryWrapper);
+    }
     @Transactional
     public void updateOrderStatus(Long orderId, Integer status, String message) throws IOException {
         // 1. 找出订单
@@ -55,7 +62,7 @@ public class OrderPoolService {
         switch (status){
             case 200:   //SUCCESS   机器人执行成功等待回单
             case 201:   //EXCEPTION 机器人执行异常，等待修改数据
-                // 1. 记录log 2. 更新状态和状态信息,更新OrderPool message
+                // 1. 记录log 2. ,更新更新状态和状态信息OrderPool message
                 orderLog.setOrderId(orderId);
                 orderLog.setType(status);
                 orderLog.setMessage(message);
