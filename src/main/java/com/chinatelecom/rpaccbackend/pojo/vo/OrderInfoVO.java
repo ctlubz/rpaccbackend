@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 public class OrderInfoVO {
     private Long orderId;
-    private String buisType;
+    private String busiType;
     private String customerName;
     private String customerNumber;
     @DateTimeFormat(pattern="yyyy-MM-dd")

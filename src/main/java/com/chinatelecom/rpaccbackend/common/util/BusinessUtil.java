@@ -68,6 +68,9 @@ public class BusinessUtil {
             case "套餐停机":
                 result = shutdownSplit(remark, factorArray);
                 break;
+            case "叠加包、促销订购":
+                result = packageSubscribe(remark, factorArray);
+                break;
             default:
                 throw new BusinessException("未知业务动作或者");
         }
@@ -97,5 +100,32 @@ public class BusinessUtil {
         }
         return result;
     }
-
+    public static JSONObject packageSubscribe(String remark, JSONArray factorArray){
+        JSONObject result = new JSONObject();
+        String[] factorList = remark.split("\\|");
+        for(String s : factorList){
+            int middle = s.indexOf('：');    // 根据：分割
+            String key = s.substring(0, middle);    // 取key
+            key = key.replace(" ", ""); // 去掉key中空格
+            if(!factorArray.contains(key)){ // 如果不是业务需要的元素直接下一步
+                continue;
+            }
+            String value = s.substring(middle + 1); // 取值
+            if(key.equals("订购/注销促销、叠加包名称")){ // 如果是订购/注销促销、叠加包名称需要进一步划分
+                String[] tempStrList = value.split("-");
+                if(tempStrList.length != 2){
+                    continue;
+                }
+                result.put("叠加包动作", tempStrList[0]);
+                String[] packageStrList = tempStrList[1].split("、");
+                JSONArray packageList = new JSONArray();
+                packageList.addAll(Arrays.asList(packageStrList));
+                result.put("叠加包", packageList);
+            }
+            else {
+                result.put(key, value);
+            }
+        }
+        return result;
+    }
 }

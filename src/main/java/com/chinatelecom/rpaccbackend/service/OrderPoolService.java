@@ -27,9 +27,6 @@ public class OrderPoolService {
         this.orderLogDAO = orderLogDAO;
         this.orderPoolDAO = orderPoolDAO;
     }
-    public List<OrderPool> orderPoolIndex(){
-        return orderPoolDAO.selectList(null);
-    }
     public void insertOrderPool(Long orderId, String remark, String busiType){
         OrderPool orderPool = new OrderPool();
         orderPool.setOrderId(orderId);
@@ -42,7 +39,7 @@ public class OrderPoolService {
         OrderPool orderPool = orderPoolDAO.selectById(orderId);
         //如果订单为空
         if(Objects.isNull(orderPool)){
-            return;
+            throw new BusinessException("工单不存在");
         }
         orderPool.setOrderStatus(status);
         if(Objects.isNull(message)){

@@ -47,9 +47,7 @@ class RpacCbackendApplicationTests {
             "}";
     @Test
     void contextLoads() {
-        String str = "预拆机停机/无需求";
-        String[] tempList = str.split("/");
-        System.out.println(tempList.length);
+
     }
     @Test
     void xmlTest() throws Exception {
