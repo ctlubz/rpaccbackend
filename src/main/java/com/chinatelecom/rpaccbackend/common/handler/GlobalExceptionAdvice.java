@@ -39,4 +39,9 @@ public class GlobalExceptionAdvice {
         e.printStackTrace();
         return Result.fail().message("请求头数据格式不准确，请更正重试");
     }
+    @ExceptionHandler(BusinessException.class)
+    public Result<Object> businessException(BusinessException e){
+        e.printStackTrace();
+        return Result.fail().message(e.getErrorMessage());
+    }
 }
