@@ -10,17 +10,14 @@ import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderInfo;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import com.chinatelecom.rpaccbackend.pojo.vo.OrderInfoVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Objects;
 
 @Service
 public class RPAService {
-    //Autowire
     private final OrderPoolDAO orderPoolDAO;
     private final OrderInfoDAO orderInfoDAO;
     public RPAService(OrderPoolDAO orderPoolDAO, OrderInfoDAO orderInfoDAO) {
