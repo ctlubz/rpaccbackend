@@ -2,6 +2,7 @@ package com.chinatelecom.rpaccbackend.common.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.chinatelecom.rpaccbackend.common.config.BusinessFactorConfig;
 import com.chinatelecom.rpaccbackend.common.handler.BusinessException;
 import com.chinatelecom.rpaccbackend.service.OrderPoolService;
 import com.google.common.collect.Sets;
@@ -58,7 +59,7 @@ public class BusinessUtil {
     }
 
     public static JSONObject parseRemark(String remark, String businessType) throws Exception{
-        JSONObject businessFactorJson = (JSONObject) JSONObject.parse(JsonUtil.readJsonFile("src/main/resources/config/BusinessFactorConfig.json"));
+        JSONObject businessFactorJson = BusinessFactorConfig.businessFactorJson;
         if(!businessFactorJson.containsKey(businessType)){
             return null;
         }
@@ -78,8 +79,10 @@ public class BusinessUtil {
     }
     public static JSONObject shutdownSplit(String remark, JSONArray factorArray){
         JSONObject result = new JSONObject();
-        String[] factorList = remark.split("\\|");
+        String[] factorList = remark.split("\\*");
         for(String s : factorList){
+            if(s.isEmpty())
+                continue;
             int middle = s.indexOf('：');    // 根据：分割
             String key = s.substring(0, middle);    // 取key
             key = key.replace(" ", ""); // 去掉key中空格
@@ -87,22 +90,23 @@ public class BusinessUtil {
                 continue;
             }
             String value = s.substring(middle + 1); // 取值
-            if(key.equals("停机类型")){ // 如果是停机类型需要进一步划分
-                String[] tempList = value.split("/");
-                result.put("停机类型", tempList[0]);
-                if(tempList.length == 2){
-                    result.put("停机子类型", tempList[1]);
-                }
-            }
-            else {
-                result.put(key, value);
-            }
+//            if(key.equals("停机类型")){ // 如果是停机类型需要进一步划分
+//                String[] tempList = value.split("/");
+//                result.put("停机类型", tempList[0]);
+//                if(tempList.length == 2){
+//                    result.put("停机子类型", tempList[1]);
+//                }
+//            }
+//            else {
+//                result.put(key, value);
+//            }
+            result.put(key, value);
         }
         return result;
     }
     public static JSONObject packageSubscribe(String remark, JSONArray factorArray){
         JSONObject result = new JSONObject();
-        String[] factorList = remark.split("\\|");
+        String[] factorList = remark.split("\\*");
         for(String s : factorList){
             int middle = s.indexOf('：');    // 根据：分割
             String key = s.substring(0, middle);    // 取key
