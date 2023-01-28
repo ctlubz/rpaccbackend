@@ -15,10 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Matcher;
 
 @SpringBootTest
@@ -45,6 +43,8 @@ class RpacCbackendApplicationTests {
     private final String splitByDivide = "{\n" +
             "  \"停机类型\": [\"停机类型\", \"停机子类型\"]\n" +
             "}";
+    private final String prodshutdownString = "业务备注：【其它业务内容补充】：{}," +
+            "【套餐停机】：{*业务号码：17729278392*停机类型：预拆机停机*停机原因：资费原因*产品类型：移动电话*联系人：单位*联系电话：17729270779}";
     @Test
     void contextLoads() {
 
@@ -75,12 +75,20 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void splitTest() throws Exception {
-        String testStr = "业务号码：15353715917|停机类型：预拆机停机/无需求|联系人：马萍";
+        String testStr = "*业务号码：17729278392*停机类型：预拆机停机*停机原因：资费原因*产品类型：移动电话*联系人：单位*联系电话：17729270779";
         System.out.println(BusinessUtil.parseRemark(testStr, "套餐停机"));
     }
     @Test
     void readJsonTest(){
         JSONObject jsonObject = (JSONObject) JSONObject.parse(JsonUtil.readJsonFile("src/main/resources/config/BusinessFactorConfig.json"));
         System.out.println(jsonObject.get("套餐新装"));
+    }
+    @Test
+    void dateTest(){
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        String format = simpleDateFormat.format(date);
+        System.out.println(format);
     }
 }

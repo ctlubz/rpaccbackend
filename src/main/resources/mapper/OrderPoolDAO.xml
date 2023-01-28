@@ -11,9 +11,10 @@
 
     <insert id="insertByParam" parameterType="com.chinatelecom.rpaccbackend.pojo.entity.OrderPool">
         INSERT INTO  tb_order_pool(
-            order_id,busi_type,remark,create_time,update_time
+            order_id,order_status,busi_type,remark,create_time,update_time
         )VALUES (
                     #{order_id},
+                    '3',
                     #{busi_type},
                     #{remark},
                     now(),
