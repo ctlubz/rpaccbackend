@@ -11,7 +11,6 @@ import com.chinatelecom.rpaccbackend.pojo.entity.OrderInfo;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import com.chinatelecom.rpaccbackend.pojo.vo.OrderInfoVO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -48,6 +47,7 @@ public class RPAService {
      * RPA添加工单接口
      * */
     public void addOrder(OrderInfoVO orderInfoVO){
+        // 1. 初始化工单池对象
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderId(orderInfoVO.getOrderId());
         orderInfo.setInitTime(orderInfoVO.getInitTime());
@@ -59,8 +59,10 @@ public class RPAService {
         }
         orderInfo.setRemark(orderInfoVO.getRemark());
         orderInfoDAO.insert(orderInfo);
-        String businessType = StringSplit.lastContext(orderInfo.getRemark(), false);
-        String remark = StringSplit.lastContext(orderInfo.getRemark(), true);
+        // 2. 初始化工单池对象
+        String businessType = StringSplit.lastContext(orderInfo.getRemark(), false);    // 业务动作
+        // @TODO 对业务动作进行筛选
+        String remark = StringSplit.lastContext(orderInfo.getRemark(), true);   // 备注
         if(Objects.isNull(remark)){
             remark = orderInfoVO.getRemark();
         }
