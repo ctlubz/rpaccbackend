@@ -4,12 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chinatelecom.rpaccbackend.common.config.BusinessFactorConfig;
 import com.chinatelecom.rpaccbackend.common.handler.BusinessException;
-import com.chinatelecom.rpaccbackend.service.OrderPoolService;
-import com.google.common.collect.Sets;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.*;
 
 @Component
@@ -67,7 +63,8 @@ public class BusinessUtil {
         JSONObject result = null;
         switch (businessType){
             case "套餐停机":
-                result = shutdownSplit(remark, factorArray);
+            case "套餐复机":
+                result = commonSplit(remark, factorArray);
                 break;
             case "叠加包、促销订购":
                 result = packageSubscribe(remark, factorArray);
@@ -77,7 +74,7 @@ public class BusinessUtil {
         }
         return result;
     }
-    public static JSONObject shutdownSplit(String remark, JSONArray factorArray){
+    public static JSONObject commonSplit(String remark, JSONArray factorArray){
         JSONObject result = new JSONObject();
         String[] factorList = remark.split("\\*");
         for(String s : factorList){
@@ -90,16 +87,6 @@ public class BusinessUtil {
                 continue;
             }
             String value = s.substring(middle + 1); // 取值
-//            if(key.equals("停机类型")){ // 如果是停机类型需要进一步划分
-//                String[] tempList = value.split("/");
-//                result.put("停机类型", tempList[0]);
-//                if(tempList.length == 2){
-//                    result.put("停机子类型", tempList[1]);
-//                }
-//            }
-//            else {
-//                result.put(key, value);
-//            }
             result.put(key, value);
         }
         return result;
