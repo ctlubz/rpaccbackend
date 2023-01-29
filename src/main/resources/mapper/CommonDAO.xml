@@ -13,4 +13,8 @@
             FROM tb_order_info, tb_order_pool
             WHERE tb_order_pool.is_deleted=0 and tb_order_info.order_id = tb_order_pool.order_id;
     </select>
+    <delete id="deleteByDate">
+        DELETE FROM tb_order_ignore
+        WHERE create_time &lt; #{time}
+    </delete>
 </mapper>

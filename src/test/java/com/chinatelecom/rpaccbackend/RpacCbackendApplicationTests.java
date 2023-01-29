@@ -55,23 +55,10 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void jsonTest(){
-        String jsonStr = "{\n" +
-                "    \"业务类型\": \"套餐停机\",\n" +
-                "    \"orderId\": 7176220,\n" +
-                "    \"归属本地网\": \"西安本地网\",\n" +
-                "    \"备注\": {\n" +
-                "        \"业务号码\": \"15353715917\",\n" +
-                "        \"停机类型\": \"预拆机停机\",\n" +
-                "        \"停机子类型\": \"无需求\",\n" +
-                "        \"test\":[1,2]\n" +
-                "    }\n" +
-                "}";
-        JSONObject jsonObject = (JSONObject) JSONObject.parse(jsonStr);
-        JSONObject remarkObject = jsonObject.getJSONObject("备注");
-        jsonObject.putAll(remarkObject);
-        jsonObject.remove("备注");
-        System.out.println(jsonObject);
-//        System.out.println(remarkObject);
+//        Date date = new Date();
+//        long dateValue = date.getTime();
+//        dateValue = dateValue - 7L * 86400000;
+//        commonDAO.deleteByDate(new Date(dateValue));
     }
     @Test
     void splitTest() throws Exception {
