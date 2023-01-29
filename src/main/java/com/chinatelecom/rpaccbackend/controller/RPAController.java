@@ -51,9 +51,11 @@ public class RPAController {
         rpaService.addOrder(orderInfoVO);
         return Result.ok();
     }
-    @PostMapping("get")
+    @GetMapping("get")
     @ApiOperation("获取可执行工单")
-    public Result<JSONObject> getOrder() throws Exception {
-        return Result.ok(rpaService.getOrder());
+    public Result<JSONObject> getOrder(
+            @RequestParam(name = "type", required = false) String busiType,
+            @RequestParam(name = "execute", required = false) boolean execute) throws Exception {
+        return Result.ok(rpaService.getOrder(busiType, execute));
     }
 }

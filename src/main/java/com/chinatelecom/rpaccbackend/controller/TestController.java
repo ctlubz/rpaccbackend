@@ -23,16 +23,10 @@ public class TestController {
     private TestDAO testDAO;
     @Autowired
     private OrderIgnoreDAO orderIgnoreDAO;
-    @GetMapping
-    public Result<Object> testController(){
-        return Result.ok("Hello");
-    }
-    @PostMapping("date")
-    public Result<Object> testFormat(@RequestBody TestVO testVO){
-        if(Objects.isNull(testVO.getPwd())){
-            System.out.println("pwd is null");
-        }
-        return Result.ok(testVO);
+    @GetMapping("paramtest")
+    public Result<Object> paramTest(@RequestParam(name = "type", required = false) boolean id){
+
+        return Result.ok(id);
     }
     @PutMapping("update")
     public Result<Object> updateTest(){

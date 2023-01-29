@@ -51,7 +51,7 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void xmlTest() throws Exception {
-        System.out.println(rpaService.getOrder());
+        System.out.println(rpaService.getOrder(null, false));
     }
     @Test
     void jsonTest(){
@@ -75,8 +75,8 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void splitTest() throws Exception {
-        String testStr = "*业务号码：17729278392*停机类型：预拆机停机*停机原因：资费原因*产品类型：移动电话*联系人：单位*联系电话：17729270779";
-        System.out.println(BusinessUtil.parseRemark(testStr, "套餐停机"));
+        String testStr = "*业务号码：17729278392*产品类型：移动号码";
+        System.out.println(BusinessUtil.parseRemark(testStr, "套餐复机"));
     }
     @Test
     void readJsonTest(){

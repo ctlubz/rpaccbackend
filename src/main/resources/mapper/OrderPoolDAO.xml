@@ -6,7 +6,12 @@
 
     <select id="selectByStatus" resultType="com.chinatelecom.rpaccbackend.pojo.entity.OrderPool">
         SELECT order_id,order_status,busi_type,remark FROM tb_order_pool
-        where is_deleted=0 AND order_status=#{order_status}
+        where is_deleted=0
+        AND order_status=#{order_status}
+        <if test="busi_type != null">
+            AND busi_type=#{busi_type}
+        </if>
+        limit 1
     </select>
 
     <insert id="insertByParam" parameterType="com.chinatelecom.rpaccbackend.pojo.entity.OrderPool">

@@ -70,7 +70,7 @@ public class BusinessUtil {
                 result = packageSubscribe(remark, factorArray);
                 break;
             default:
-                throw new BusinessException("未知业务动作或者");
+                throw new BusinessException("未知业务动作");
         }
         return result;
     }

@@ -2,6 +2,7 @@ package com.chinatelecom.rpaccbackend.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.chinatelecom.rpaccbackend.common.config.BusinessFactorConfig;
 import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.common.util.BusinessUtil;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
@@ -71,8 +72,13 @@ public class RPAService {
     /**
      * 机器人取工单接口
      * */
-    public JSONObject getOrder() throws Exception {
-        OrderPool orderPool = orderPoolDAO.selectByStatus(String.valueOf(OrderStatusEnum.WAITING.getCode()));
+    public JSONObject getOrder(String busiType, boolean execute) throws Exception {
+        // 对busiType输入进行校验，不存在则设置为空
+        if(!BusinessFactorConfig.businessFactorJson.containsKey(busiType)){
+            busiType = null;
+        }
+        // 从工单池中筛选出工单
+        OrderPool orderPool = orderPoolDAO.selectByStatus(String.valueOf(OrderStatusEnum.WAITING.getCode()), busiType);
         if(Objects.isNull(orderPool)){  //没有工单
             return null;
         }
@@ -83,6 +89,7 @@ public class RPAService {
         result.put("归属本地网", orderInfo.getLocalNet());
         JSONObject businessRemark = BusinessUtil.parseRemark(orderPool.getRemark(), orderPool.getBusiType());
         result.putAll(businessRemark);
+        // @TODO 执行中订单状态，定时返回
         return result;
     }
 }
