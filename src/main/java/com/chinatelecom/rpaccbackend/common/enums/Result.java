@@ -1,4 +1,4 @@
-package com.chinatelecom.rpaccbackend.common.pojo;
+package com.chinatelecom.rpaccbackend.common.enums;
 
 import lombok.Data;
 

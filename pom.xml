@@ -83,10 +83,13 @@
     <build>
 <!--        <resources>-->
 <!--            <resource>-->
-<!--                <directory>src/main/resources/config</directory>-->
+<!--                <directory>src/main/resources</directory>-->
 <!--                <includes>-->
-<!--                    <include>**/*</include>-->
+<!--                    <include>BusinessFactorConfig.json</include>-->
 <!--                </includes>-->
+<!--                <excludes>-->
+<!--                    <exclude>**/*.yml</exclude>-->
+<!--                </excludes>-->
 <!--            </resource>-->
 <!--        </resources>-->
         <plugins>

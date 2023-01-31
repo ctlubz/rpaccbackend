@@ -1,7 +1,7 @@
 package com.chinatelecom.rpaccbackend.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.chinatelecom.rpaccbackend.common.pojo.Result;
+import com.chinatelecom.rpaccbackend.common.enums.Result;
 import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderIgnore;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderInfo;

@@ -4,14 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chinatelecom.rpaccbackend.dao.CommonDAO">
     <select id="orderPoolIndex" resultType="com.chinatelecom.rpaccbackend.pojo.entity.OrderIndex">
-        SELECT tb_order_info.order_id as orderId,
-            tb_order_info.init_time as initTime,
-            tb_order_info.customer_number as customerNumber,
-            tb_order_pool.order_status as orderStatus,
-            tb_order_pool.remark,
-            tb_order_pool.busi_type as busiType
-            FROM tb_order_info, tb_order_pool
-            WHERE tb_order_pool.is_deleted=0 and tb_order_info.order_id = tb_order_pool.order_id;
+        SELECT oi.order_id as orderId,
+               oi.init_time as initTime,
+               oi.customer_number as customerNumber,
+               op.order_status as orderStatus,
+               op.remark,
+               op.busi_type as busiType
+            FROM tb_order_info as oi
+            INNER JOIN tb_order_pool as op
+            ON oi.order_id=op.order_id;
     </select>
     <delete id="deleteByDate">
         DELETE FROM tb_order_ignore

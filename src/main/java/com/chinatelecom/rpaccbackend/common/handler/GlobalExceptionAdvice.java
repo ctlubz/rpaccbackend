@@ -1,6 +1,6 @@
 package com.chinatelecom.rpaccbackend.common.handler;
 
-import com.chinatelecom.rpaccbackend.common.pojo.Result;
+import com.chinatelecom.rpaccbackend.common.enums.Result;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;

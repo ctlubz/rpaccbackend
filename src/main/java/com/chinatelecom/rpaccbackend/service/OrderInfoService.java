@@ -1,12 +1,7 @@
 package com.chinatelecom.rpaccbackend.service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chinatelecom.rpaccbackend.common.handler.BusinessException;
-import com.chinatelecom.rpaccbackend.common.pojo.BusinessPropertyEnum;
-import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
-import com.chinatelecom.rpaccbackend.common.util.StringSplit;
+import com.chinatelecom.rpaccbackend.common.enums.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderInfo;
@@ -15,9 +10,7 @@ import com.chinatelecom.rpaccbackend.pojo.vo.UpdateRemarkVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
 
 @Service
 public class OrderInfoService {

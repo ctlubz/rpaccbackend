@@ -1,8 +1,6 @@
 package com.chinatelecom.rpaccbackend.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chinatelecom.rpaccbackend.common.handler.BusinessException;
-import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.dao.OrderHistoryDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderLogDAO;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -66,6 +63,11 @@ public class OrderPoolService {
                 orderHistory.setOrderStatus(status);
                 orderHistory.setAutomatic(2);   //标记无法完成
                 orderHistoryDAO.insert(orderHistory);
+                // 记录log
+                orderLog.setOrderId(orderId);
+                orderLog.setType(status);
+                orderLog.setMessage(message);
+                orderLogDAO.insert(orderLog);
                 //添加table ignore
                 OrderIgnore orderIgnore = new OrderIgnore();
                 orderIgnore.setOrderId(orderId);
@@ -73,6 +75,11 @@ public class OrderPoolService {
                 orderPoolDAO.deleteById(orderId);
                 break;
             case 255:   //HISTORY订单完全完成，添加tb_order_history 删除订单
+                // 记录log
+                orderLog.setOrderId(orderId);
+                orderLog.setType(status);
+                orderLog.setMessage(message);
+                orderLogDAO.insert(orderLog);
                 orderHistory.setOrderId(orderId);
                 orderHistory.setOrderStatus(status);
                 orderHistory.setAutomatic(orderPool.getAutomatic());   //标记是否自动完成

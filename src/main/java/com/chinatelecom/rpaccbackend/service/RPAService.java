@@ -3,7 +3,7 @@ package com.chinatelecom.rpaccbackend.service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chinatelecom.rpaccbackend.common.config.BusinessFactorConfig;
-import com.chinatelecom.rpaccbackend.common.pojo.OrderStatusEnum;
+import com.chinatelecom.rpaccbackend.common.enums.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.common.util.BusinessUtil;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
 import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
