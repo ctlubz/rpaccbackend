@@ -1,5 +1,6 @@
 package com.chinatelecom.rpaccbackend.controller;
 
+import com.chinatelecom.rpaccbackend.common.config.BusinessFactorConfig;
 import com.chinatelecom.rpaccbackend.dao.CommonDAO;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderIndex;
 import com.chinatelecom.rpaccbackend.common.enums.Result;
@@ -25,7 +26,12 @@ public class OrderPoolController {
     @GetMapping("index")
     public Result<List<OrderIndex>> orderPoolIndex(){
         // 工单号、发起时间、联系人电话、工单状态、备注
-        return Result.ok(commonDAO.orderPoolIndex());
+        // 临时转换
+        List<OrderIndex> orderIndexList = commonDAO.orderPoolIndex();
+        for (OrderIndex orderIndex : orderIndexList){
+            orderIndex.setOrderStatus(BusinessFactorConfig.statusMap.get(orderIndex.getOrderStatus()));
+        }
+        return Result.ok(orderIndexList);
     }
 
     @PutMapping("status")

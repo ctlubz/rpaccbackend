@@ -9,6 +9,6 @@ public class OrderIndex {
     private Long orderId;
     private Date initTime;
     private String busiType;
-    private Integer orderStatus;
+    private String orderStatus;
     private String remark;
 }

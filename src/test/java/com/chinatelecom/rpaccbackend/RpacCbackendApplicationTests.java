@@ -46,9 +46,7 @@ class RpacCbackendApplicationTests {
     private final String prodshutdownString = "业务备注：【其它业务内容补充】：{}," +
             "【套餐停机】：{*业务号码：17729278392*停机类型：预拆机停机*停机原因：资费原因*产品类型：移动电话*联系人：单位*联系电话：17729270779}";
     @Test
-    void contextLoads() {
-
-    }
+    void contextLoads() {}
     @Test
     void xmlTest() throws Exception {
         System.out.println(rpaService.getOrder(null, false));

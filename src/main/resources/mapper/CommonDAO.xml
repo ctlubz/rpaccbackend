@@ -18,4 +18,5 @@
         DELETE FROM tb_order_ignore
         WHERE create_time &lt; #{time}
     </delete>
+
 </mapper>
