@@ -64,11 +64,12 @@ public class BusinessUtil {
         switch (businessType){
             case "套餐停机":
             case "套餐复机":
+            case "叠加包、促销订购":
                 result = commonSplit(remark, factorArray);
                 break;
-            case "叠加包、促销订购":
-                result = packageSubscribe(remark, factorArray);
-                break;
+//            case "叠加包、促销订购":
+//                result = packageSubscribe(remark, factorArray);
+//                break;
             default:
                 throw new BusinessException("未知业务动作");
         }

@@ -17,7 +17,8 @@ public class BusinessFactorConfig {
 //        String jsonString = JsonUtil.readJsonFile("src/main/resources/BusinessFactorConfig.json");
         String jsonString = "{\n" +
                 "  \"套餐停机\": [\"业务号码\", \"停机类型\", \"停机原因\", \"产品类型\", \"联系人\", \"联系电话\"],\n" +
-                "  \"套餐复机\": [\"业务号码\", \"产品类型\"]\n" +
+                "  \"套餐复机\": [\"业务号码\", \"产品类型\"],\n" +
+                "  \"叠加包、促销订购\": [\"业务号码\", \"订购/注销促销、叠加包名称\", \"终端串码\", \"特殊备注\"]\n" +
                 "}";
         if(!Objects.isNull(jsonString)) {
             businessFactorJson = (JSONObject) JSONObject.parse(jsonString);
