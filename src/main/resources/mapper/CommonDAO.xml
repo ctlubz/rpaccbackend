@@ -12,7 +12,7 @@
                op.busi_type as busiType
             FROM tb_order_info as oi
             INNER JOIN tb_order_pool as op
-            ON oi.order_id=op.order_id;
+            ON oi.order_id=op.order_id
     </select>
     <delete id="deleteByDate">
         DELETE FROM tb_order_ignore

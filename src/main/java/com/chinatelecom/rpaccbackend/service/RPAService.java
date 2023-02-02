@@ -47,16 +47,20 @@ public class RPAService {
     /**
      * RPA添加工单接口
      * */
-    public void addOrder(OrderInfoVO orderInfoVO){
+    public void addOrder(OrderInfoVO orderInfoVO) throws Exception{
+
         // 1. 初始化工单池对象
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderId(orderInfoVO.getOrderId());
         orderInfo.setInitTime(orderInfoVO.getInitTime());
-        if(!Objects.isNull(orderInfoVO.getCustomerNumber())) {
+        if(!Objects.isNull(orderInfoVO.getCustomerNumber())) {  // 客户号码
             orderInfo.setCustomerNumber(orderInfoVO.getCustomerNumber());
         }
-        if(!Objects.isNull(orderInfoVO.getLocalNet())){
+        if(!Objects.isNull(orderInfoVO.getLocalNet())){ // 本地网
             orderInfo.setLocalNet(orderInfoVO.getLocalNet());
+        }
+        if(!Objects.isNull(orderInfoVO.getFees())){   // 费用
+            orderInfo.setFees(orderInfoVO.getFees());
         }
         orderInfo.setRemark(orderInfoVO.getRemark());
         orderInfoDAO.insert(orderInfo);
