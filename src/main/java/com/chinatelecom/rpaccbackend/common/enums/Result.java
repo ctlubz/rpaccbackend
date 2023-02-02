@@ -1,13 +1,17 @@
 package com.chinatelecom.rpaccbackend.common.enums;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
 public class Result<T> {
+    @ApiModelProperty(value = "返回状态码，200成功，201失败")
     //返回状态码
     private int code;
+    @ApiModelProperty(value = "信息")
     //返回消息
     private String message;
+    @ApiModelProperty("数据")
     //返回数据
     private T data;
     public Result(){}
