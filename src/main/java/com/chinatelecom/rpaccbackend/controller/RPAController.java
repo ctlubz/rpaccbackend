@@ -2,6 +2,8 @@ package com.chinatelecom.rpaccbackend.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chinatelecom.rpaccbackend.common.enums.Result;
+import com.chinatelecom.rpaccbackend.common.handler.AddOrderException;
+import com.chinatelecom.rpaccbackend.common.handler.BusinessException;
 import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderIgnore;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderInfo;
@@ -42,16 +44,21 @@ public class RPAController {
     @ApiOperation("添加工单")
     public Result<Object> addOrder(@RequestBody OrderInfoVO orderInfoVO) throws Exception{
         //判断工单号是否为空
-        if (Objects.isNull(orderInfoVO.getOrderId())){
-            return Result.fail().message("工单号不能为空");
+        try {
+            if (Objects.isNull(orderInfoVO.getOrderId())) {
+                throw new AddOrderException(orderInfoVO.getOrderId());
+            }
+            //检索工单是否已经存在
+            OrderInfo orderInfo = orderInfoService.selectOneById(orderInfoVO.getOrderId());
+            if (!Objects.isNull(orderInfo)) {
+                throw new AddOrderException(orderInfoVO.getOrderId());
+            }
+            rpaService.addOrder(orderInfoVO);
+            return Result.ok();
         }
-        //检索工单是否已经存在
-        OrderInfo orderInfo = orderInfoService.selectOneById(orderInfoVO.getOrderId());
-        if(!Objects.isNull(orderInfo)){
-            return Result.fail().message("工单已存在");
+        catch (Exception e){
+            throw new AddOrderException(orderInfoVO.getOrderId());
         }
-        rpaService.addOrder(orderInfoVO);
-        return Result.ok();
     }
     @GetMapping("get")
     @ApiOperation("获取可执行工单")

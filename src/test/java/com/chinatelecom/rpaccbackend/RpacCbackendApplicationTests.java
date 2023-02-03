@@ -2,13 +2,12 @@ package com.chinatelecom.rpaccbackend;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.chinatelecom.rpaccbackend.common.config.BusinessFactorConfig;
 import com.chinatelecom.rpaccbackend.common.util.BusinessUtil;
 import com.chinatelecom.rpaccbackend.common.util.JsonUtil;
-import com.chinatelecom.rpaccbackend.dao.CommonDAO;
-import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
-import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
-import com.chinatelecom.rpaccbackend.dao.TestDAO;
+import com.chinatelecom.rpaccbackend.dao.*;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderIgnore;
 import com.chinatelecom.rpaccbackend.service.OrderPoolService;
 import com.chinatelecom.rpaccbackend.service.RPAService;
 import org.junit.jupiter.api.Test;
@@ -26,9 +25,13 @@ class RpacCbackendApplicationTests {
     @Autowired
     private TestDAO testDAO;
     @Autowired
+    private PackageMappingDAO packageMappingDAO;
+    @Autowired
     private OrderPoolService orderPoolService;
     @Autowired
     private RPAService rpaService;
+    @Autowired
+    private OrderIgnoreDAO orderIgnoreDAO;
     @Autowired
     private CommonDAO commonDAO;
     @Autowired
@@ -50,10 +53,9 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void jsonTest(){
-//        Date date = new Date();
-//        long dateValue = date.getTime();
-//        dateValue = dateValue - 7L * 86400000;
-//        commonDAO.deleteByDate(new Date(dateValue));
+        String temp = "5G99";
+        System.out.println(BusinessFactorConfig.packageMap);
+        System.out.println(BusinessFactorConfig.packageMap.get(temp));
     }
     @Test
     void splitTest() throws Exception {
@@ -62,15 +64,6 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void readJsonTest(){
-        JSONObject jsonObject = (JSONObject) JSONObject.parse(JsonUtil.readJsonFile("src/main/resources/config/BusinessFactorConfig.json"));
-        System.out.println(jsonObject.get("套餐新装"));
-    }
-    @Test
-    void dateTest(){
-        Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-        String format = simpleDateFormat.format(date);
-        System.out.println(format);
+
     }
 }

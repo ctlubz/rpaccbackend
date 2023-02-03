@@ -1,6 +1,9 @@
 package com.chinatelecom.rpaccbackend.common.handler;
 
 import com.chinatelecom.rpaccbackend.common.enums.Result;
+import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -9,9 +12,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
+    @Autowired
+    private OrderIgnoreDAO orderIgnoreDAO;
     //拦截所有异常信息
     @ExceptionHandler(Exception.class)
     public Result<Object> doException(Exception e){
@@ -47,5 +53,17 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler(BusinessException.class)
     public Result<Object> businessException(BusinessException e){
         return Result.fail().message(e.getErrorMessage());
+    }
+    @ExceptionHandler(AddOrderException.class)
+    public Result<Object> addOrderException(AddOrderException e){
+        // @TODO 处理
+        OrderIgnore orderIgnore = orderIgnoreDAO.selectById(e.getOrderId());
+        System.out.println(orderIgnore);
+        if(Objects.isNull(orderIgnore)){
+            orderIgnore = new OrderIgnore();
+            orderIgnore.setOrderId(e.getOrderId());
+            orderIgnoreDAO.insert(orderIgnore);
+        }
+        return Result.fail().message("添加工单失败，该工单已不可领取");
     }
 }
