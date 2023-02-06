@@ -82,7 +82,7 @@ public class RPAService {
             busiType = null;
         }
         // 从工单池中筛选出工单
-        OrderPool orderPool = orderPoolDAO.selectByStatus(String.valueOf(OrderStatusEnum.WAITING.getCode()), busiType);
+        OrderPool orderPool = orderPoolDAO.selectByStatus(String.valueOf(OrderStatusEnum.EXECUTING.getCode()), busiType);
         if(Objects.isNull(orderPool)){  //没有工单
             return null;
         }

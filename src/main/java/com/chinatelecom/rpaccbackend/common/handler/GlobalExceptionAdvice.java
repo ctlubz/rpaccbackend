@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Objects;
 
 @RestControllerAdvice
@@ -49,6 +50,10 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result<Object> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e){
         return Result.fail().message("请求方法(Method)错误");
+    }
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public Result<Object> sqlIntegrityConstrainViolationException(SQLIntegrityConstraintViolationException e){
+        return Result.fail().message("违反数据库唯一约束");
     }
     @ExceptionHandler(BusinessException.class)
     public Result<Object> businessException(BusinessException e){

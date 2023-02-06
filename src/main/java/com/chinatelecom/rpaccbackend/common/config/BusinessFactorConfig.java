@@ -25,14 +25,16 @@ public class BusinessFactorConfig {
         String jsonString = "{\n" +
                 "  \"套餐停机\": [\"业务号码\", \"停机类型\", \"停机原因\", \"产品类型\", \"联系人\", \"联系电话\"],\n" +
                 "  \"套餐复机\": [\"业务号码\", \"产品类型\"],\n" +
-                "  \"叠加包、促销订购\": [\"业务号码\", \"订购/注销促销、叠加包名称\", \"终端串码\", \"特殊备注\"]\n" +
+                "  \"叠加包、促销订购\": [\"业务号码\", \"订购/注销促销、叠加包名称\", \"终端串码\", \"特殊备注\"],\n" +
+                "  \"补卡\": [\"业务号码\", \"产品类型\", \"UIM卡号\", \"补换卡费优惠\", \"3G卡是否升级为4G卡\"]\n" +
                 "}";
         if(!Objects.isNull(jsonString)) {
             businessFactorJson = (JSONObject) JSONObject.parse(jsonString);
 //            System.out.println(businessFactorJson);
         }
         statusMap.put("3", "待执行");
-        statusMap.put("254", "执行失败");
+        statusMap.put("4", "执行中");
+        statusMap.put("254", "已驳回");
         statusMap.put("255", "已竣工");
         List<PackageMapping> packageMappingList = packageMappingDAO.selectList(null);
         for(PackageMapping packageMapping : packageMappingList){

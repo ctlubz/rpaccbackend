@@ -65,6 +65,7 @@ public class BusinessUtil {
             case "套餐停机":
             case "套餐复机":
             case "叠加包、促销订购":
+            case "补卡":
                 result = commonSplit(remark, factorArray);
                 break;
 //            case "叠加包、促销订购":
