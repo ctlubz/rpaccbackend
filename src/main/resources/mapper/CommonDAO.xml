@@ -18,5 +18,32 @@
         DELETE FROM tb_order_ignore
         WHERE create_time &lt; #{time}
     </delete>
+    <insert id="insertIntoExecuting">
+        INSERT INTO tb_executing(
+            order_id,is_deleted,create_time
+        )VALUES (
+                    #{order_id},
+                    '0',
+                    now()
+                )
+    </insert>
+    <select id="getFullNameBySimpleName" resultType="java.lang.String">
+        SELECT full_name FROM tb_package_mapping
+        WHERE simple_name=#{simple_name}
+        AND type=#{type}
+    </select>
 
+
+    <update id="updateExecuting">
+        UPDATE tb_order_pool
+        SET order_status=3
+        WHERE order_id IN(
+            SELECT order_id FROM tb_executing
+            WHERE is_deleted=0
+            AND create_time &lt; #{time}
+        );
+        UPDATE tb_executing
+        SET is_deleted=1
+        WHERE create_time &lt; #{time};
+    </update>
 </mapper>

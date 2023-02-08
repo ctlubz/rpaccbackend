@@ -1,6 +1,7 @@
 package com.chinatelecom.rpaccbackend.common.config;
 
 import com.alibaba.fastjson.JSONObject;
+import com.chinatelecom.rpaccbackend.dao.CommonDAO;
 import com.chinatelecom.rpaccbackend.dao.PackageMappingDAO;
 import com.chinatelecom.rpaccbackend.pojo.entity.PackageMapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,8 @@ import java.util.Objects;
 
 @Component
 public class BusinessFactorConfig {
-    @Autowired
-    private PackageMappingDAO packageMappingDAO;
     public static JSONObject businessFactorJson;
     public static HashMap<String, String> statusMap = new HashMap<String, String>();
-    public static HashMap<String, String> packageMap = new HashMap<>();
     @PostConstruct
     private void businessFactorInit(){
 //        String jsonString = JsonUtil.readJsonFile("src/main/resources/BusinessFactorConfig.json");
@@ -34,12 +32,9 @@ public class BusinessFactorConfig {
         }
         statusMap.put("3", "待执行");
         statusMap.put("4", "执行中");
+        statusMap.put("201", "RPA运行时报错");
         statusMap.put("254", "已驳回");
         statusMap.put("255", "已竣工");
-        List<PackageMapping> packageMappingList = packageMappingDAO.selectList(null);
-        for(PackageMapping packageMapping : packageMappingList){
-            packageMap.put(packageMapping.getPackageShortName(), packageMapping.getPackageName());
-        }
     }
     @PreDestroy
     public void destroy(){

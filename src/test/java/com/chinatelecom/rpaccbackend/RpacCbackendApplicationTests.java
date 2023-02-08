@@ -8,6 +8,7 @@ import com.chinatelecom.rpaccbackend.common.util.JsonUtil;
 import com.chinatelecom.rpaccbackend.dao.*;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderIgnore;
+import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import com.chinatelecom.rpaccbackend.service.OrderPoolService;
 import com.chinatelecom.rpaccbackend.service.RPAService;
 import org.junit.jupiter.api.Test;
@@ -53,17 +54,17 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void jsonTest(){
-        String temp = "5G99";
-        System.out.println(BusinessFactorConfig.packageMap);
-        System.out.println(BusinessFactorConfig.packageMap.get(temp));
+        List<Long> orderIdList = testDAO.orderIdList();
+        orderIdList.removeIf(s -> s.equals(10788389L));
+        System.out.println(orderIdList);
     }
     @Test
     void splitTest() throws Exception {
-        String testStr = "*业务号码：17729278392*订购/注销促销、叠加包名称 ：10流量包*终端串码：无*特殊备注：无";
+        String testStr = "*业务号码：17729278392*订购/注销促销、叠加包名称：加-10流量包;加-99融合；流量包三号*终端串码：无*特殊备注：无";
         System.out.println(BusinessUtil.parseRemark(testStr, "叠加包、促销订购"));
     }
     @Test
     void readJsonTest(){
-
+        System.out.println(Objects.isNull(commonDAO.getFullNameBySimpleName("99不融合", 1)));
     }
 }

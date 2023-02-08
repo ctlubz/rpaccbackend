@@ -35,11 +35,11 @@ public class RPAController {
         OrderIgnore orderIgnore = orderIgnoreDAO.selectById(orderId);
         return Result.ok(Objects.isNull(orderIgnore) ? 0 : 1);
     }
-    @GetMapping("feedback")
-    @ApiOperation("机器人反馈中台取数")
-    public Result<Object> feedback(){
-        return Result.ok(rpaService.feedbackService());
-    }
+//    @GetMapping("feedback")
+//    @ApiOperation("机器人反馈中台取数")
+//    public Result<Object> feedback(){
+//        return Result.ok(rpaService.feedbackService());
+//    }
     @PostMapping("add")
     @ApiOperation("添加工单")
     public Result<Object> addOrder(@RequestBody OrderInfoVO orderInfoVO) throws Exception{
