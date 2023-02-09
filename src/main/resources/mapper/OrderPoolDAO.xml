@@ -5,7 +5,7 @@
 <mapper namespace="com.chinatelecom.rpaccbackend.dao.OrderPoolDAO">
 
     <select id="selectByStatus" resultType="com.chinatelecom.rpaccbackend.pojo.entity.OrderPool">
-        SELECT op.order_id, op.order_status, op.busi_type, op.remark
+        SELECT op.order_id, op.order_status, op.busi_type, op.remark, op.error_numbers
         FROM tb_order_pool as op, tb_order_info as oi
         where op.is_deleted=0
         AND order_status!=#{order_status}
@@ -29,5 +29,8 @@
                     now()
                 )
     </insert>
-
+    <update id="updateExecuting">
+        UPDATE tb_executing
+        SET is_deleted=1
+    </update>
 </mapper>

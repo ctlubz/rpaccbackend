@@ -14,4 +14,5 @@ public interface CommonDAO {
     void insertIntoExecuting(@Param("order_id") Long orderId);
     void updateExecuting(@Param("time")Date time);
     String getFullNameBySimpleName(@Param("simple_name")String simpleName, @Param("type")int type);
+    List<Long> getExecutingOrderId(@Param("time")Date time);
 }

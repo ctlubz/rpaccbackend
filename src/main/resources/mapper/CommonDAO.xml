@@ -33,6 +33,9 @@
         AND type=#{type}
     </select>
 
+    <select id="getExecutingOrderId" resultType="java.lang.Long">
+
+    </select>
 
     <update id="updateExecuting">
         UPDATE tb_order_pool

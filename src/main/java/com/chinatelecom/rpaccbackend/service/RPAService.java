@@ -6,6 +6,7 @@ import com.chinatelecom.rpaccbackend.common.config.BusinessFactorConfig;
 import com.chinatelecom.rpaccbackend.common.enums.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.common.util.BusinessUtil;
 import com.chinatelecom.rpaccbackend.common.util.StringSplit;
+import com.chinatelecom.rpaccbackend.dao.CommonDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderInfoDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderPoolDAO;
 import com.chinatelecom.rpaccbackend.pojo.entity.OrderInfo;
@@ -20,9 +21,11 @@ import java.util.Objects;
 public class RPAService {
     private final OrderPoolDAO orderPoolDAO;
     private final OrderInfoDAO orderInfoDAO;
-    public RPAService(OrderPoolDAO orderPoolDAO, OrderInfoDAO orderInfoDAO) {
+    private final CommonDAO commonDAO;
+    public RPAService(OrderPoolDAO orderPoolDAO, OrderInfoDAO orderInfoDAO, CommonDAO commonDAO) {
         this.orderPoolDAO = orderPoolDAO;
         this.orderInfoDAO = orderInfoDAO;
+        this.commonDAO = commonDAO;
     }
     /**
      * RPA取可以返回给中台的工单
@@ -77,17 +80,31 @@ public class RPAService {
      * 机器人取工单接口
      * */
     public JSONObject getOrder(String busiType, boolean execute) throws Exception {
-        // 对busiType输入进行校验，不存在则设置为空
-        if(!BusinessFactorConfig.businessFactorJson.containsKey(busiType)){
-            busiType = null;
-        }
         // 从工单池中筛选出工单
         OrderPool orderPool = orderPoolDAO.selectByStatus(String.valueOf(OrderStatusEnum.EXECUTING.getCode()), busiType);
         if(Objects.isNull(orderPool)){  //没有工单
             return null;
         }
-        OrderInfo orderInfo = orderInfoDAO.selectById(orderPool.getOrderId());
+        // 执行中状态添加
+        if(execute){
+            // 1. 加入执行中
+            commonDAO.insertIntoExecuting(orderPool.getOrderId());
+            // 2. 更新工单状态
+            orderPool.setOrderStatus(OrderStatusEnum.EXECUTING.getCode());
+            orderPoolDAO.updateById(orderPool);
+        }
         JSONObject result = new JSONObject();
+        // 需要驳回的特殊处理。
+        if(orderPool.getErrorNumbers().equals(1)){
+            result.put("业务动作", "驳回");
+            result.put("工单号", orderPool.getOrderId());
+            return result;
+        }
+        // 对busiType输入进行校验，不存在则设置为空
+        if(!BusinessFactorConfig.businessFactorJson.containsKey(busiType)){
+            busiType = null;
+        }
+        OrderInfo orderInfo = orderInfoDAO.selectById(orderPool.getOrderId());
         result.put("工单号", orderPool.getOrderId());
         result.put("业务类型", orderPool.getBusiType());
         result.put("归属本地网", orderInfo.getLocalNet());

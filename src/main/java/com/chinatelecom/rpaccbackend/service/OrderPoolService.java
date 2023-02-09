@@ -1,5 +1,6 @@
 package com.chinatelecom.rpaccbackend.service;
 
+import com.chinatelecom.rpaccbackend.common.enums.OrderStatusEnum;
 import com.chinatelecom.rpaccbackend.common.handler.BusinessException;
 import com.chinatelecom.rpaccbackend.dao.OrderHistoryDAO;
 import com.chinatelecom.rpaccbackend.dao.OrderIgnoreDAO;
@@ -46,13 +47,24 @@ public class OrderPoolService {
         // 2. 订单状态是否为200，是200插入历史工单池
         OrderHistory orderHistory = new OrderHistory();
         OrderLog orderLog = new OrderLog();
+        orderLog.setOrderId(orderId);
+        orderLog.setType(status);
+        orderLog.setMessage(message);
         switch (status){
-            case 200:   //SUCCESS   机器人执行成功等待回单
-            case 201:   //EXCEPTION 机器人执行异常，等待修改数据
-                // 1. 记录log 2. ,更新更新状态和状态信息OrderPool message
-                orderLog.setOrderId(orderId);
-                orderLog.setType(status);
-                orderLog.setMessage(message);
+            case 201:   //EXCEPTION 机器人执行异常，报错次数+1，为2的时候更改工单数据
+                Integer errorNumbers = orderPool.getErrorNumbers();
+                if(errorNumbers == 0){  // 第一次报错，次数+1
+                    errorNumbers += 1;
+                    orderPool.setErrorNumbers(errorNumbers);
+                    orderPool.setOrderStatus(status);
+                    orderPool.setMessage(message);
+                    orderPoolDAO.updateById(orderPool);
+                }
+                else {
+                    orderPool.setOrderStatus(OrderStatusEnum.EXCEPTION.getCode());
+                    orderPool.setMessage(message);
+                    orderPoolDAO.updateById(orderPool);
+                }
                 orderLogDAO.insert(orderLog);
                 orderPool.setOrderStatus(status);
                 orderPool.setMessage(message);
@@ -63,10 +75,6 @@ public class OrderPoolService {
                 orderHistory.setOrderStatus(status);
                 orderHistory.setAutomatic(2);   //标记无法完成
                 orderHistoryDAO.insert(orderHistory);
-                // 记录log
-                orderLog.setOrderId(orderId);
-                orderLog.setType(status);
-                orderLog.setMessage(message);
                 orderLogDAO.insert(orderLog);
                 //添加table ignore
                 OrderIgnore orderIgnore = new OrderIgnore();
@@ -76,9 +84,6 @@ public class OrderPoolService {
                 break;
             case 255:   //HISTORY订单完全完成，添加tb_order_history 删除订单
                 // 记录log
-                orderLog.setOrderId(orderId);
-                orderLog.setType(status);
-                orderLog.setMessage(message);
                 orderLogDAO.insert(orderLog);
                 orderHistory.setOrderId(orderId);
                 orderHistory.setOrderStatus(status);
