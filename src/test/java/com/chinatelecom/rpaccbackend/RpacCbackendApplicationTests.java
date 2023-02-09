@@ -65,6 +65,9 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void readJsonTest(){
-        System.out.println(Objects.isNull(commonDAO.getFullNameBySimpleName("99不融合", 1)));
+        Date date= new Date();
+        long dateValue = date.getTime();
+        dateValue = dateValue - 120000;  // 120000 两分钟
+        commonDAO.updateExecuting(new Date(dateValue));
     }
 }

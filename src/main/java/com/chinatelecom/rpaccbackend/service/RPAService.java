@@ -96,8 +96,8 @@ public class RPAService {
         JSONObject result = new JSONObject();
         // 需要驳回的特殊处理。
         if(orderPool.getErrorNumbers().equals(1)){
-            result.put("业务号码", 0);
-            result.put("业务动作", "驳回");
+            result.put("业务号码", "0");
+            result.put("业务类型", "驳回");
             result.put("工单号", orderPool.getOrderId());
             return result;
         }

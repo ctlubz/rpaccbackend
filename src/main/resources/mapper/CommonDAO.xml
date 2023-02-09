@@ -33,20 +33,24 @@
         AND type=#{type}
     </select>
 
-    <select id="getExecutingOrderId" resultType="com.chinatelecom.rpaccbackend.pojo.entity.OrderIdAndStatus">
+    <select id="updateExecuting">
+        UPDATE tb_order_pool AS op
+        INNER JOIN
+        (SELECT tb_order_pool.order_id
+        FROM tb_order_pool
+        INNER JOIN tb_executing
+        ON tb_order_pool.order_id = tb_executing.order_id
+        WHERE tb_executing.is_deleted = 0
+        AND tb_order_pool.is_deleted = 0
+        AND tb_order_pool.order_status = 4
+        AND tb_executing.create_time &lt; #{time}
+        ) AS b
+        ON op.order_id=b.order_id
+        SET order_status=3;
 
-    </select>
-
-    <update id="updateExecuting">
-        UPDATE tb_order_pool
-        SET order_status=3
-        WHERE order_id IN(
-            SELECT order_id FROM tb_executing
-            WHERE is_deleted=0
-            AND create_time &lt; #{time}
-        );
         UPDATE tb_executing
         SET is_deleted=1
-        WHERE create_time &lt; #{time};
-    </update>
+        WHERE create_time &lt; #{time}
+    </select>
+
 </mapper>

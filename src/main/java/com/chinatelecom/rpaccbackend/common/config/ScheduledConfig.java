@@ -24,13 +24,13 @@ public class ScheduledConfig {
     }
     /**
      * 定时清理执行中
-     * 时间每天1点03分30s
+     *
      * */
-//    @Scheduled(cron = "0 * 8,9,10,11,12,13,14,15,16,17 * * ? ")
-//    public void restoreExecuting(){
-//        Date date= new Date();
-//        long dateValue = date.getTime();
-//        dateValue = dateValue - 120000;  // 120000 两分钟
-//        commonDAO.updateExecuting(new Date(dateValue));
-//    }
+    @Scheduled(cron = "0 * 8,9,10,11,12,13,14,15,16,17 * * ? ")
+    public void restoreExecuting(){
+        Date date= new Date();
+        long dateValue = date.getTime();
+        dateValue = dateValue - 120000;  // 120000 两分钟
+        commonDAO.updateExecuting(new Date(dateValue));
+    }
 }
