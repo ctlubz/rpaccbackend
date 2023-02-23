@@ -100,7 +100,6 @@ public class BusinessUtil {
                     if(ss.isEmpty()){
                         continue;
                     }
-                    JSONObject tempJSON = new JSONObject();
                     if(ss.length() < 4) // 没有业务动作或者叠加包名字直接返回
                         continue;
                     String action;  //  业务动作
@@ -119,16 +118,35 @@ public class BusinessUtil {
                     }
                     packageSimpleName = ss.substring(pos+1);
                     packageSimpleName = packageSimpleName.toUpperCase();    // 简称小写转大写
-                    String packageFullName = businessUtil.commonDAO.getFullNameBySimpleName(packageSimpleName, 1);
-                    if(!Objects.isNull(packageFullName)){   // 非空，是简称，需要替换为全名
-                        tempJSON.put("名称", packageFullName);
+                    // new
+                    List<String> packageFullNameList = businessUtil.commonDAO.getFullNameListBySimpleName(packageSimpleName, "叠加包订购");
+                    if(packageFullNameList.size() > 0){ // 有简称
+                        for(String packageFullName : packageFullNameList){
+                            JSONObject tempJSON = new JSONObject();
+                            tempJSON.put("名称", packageFullName);
+                            tempJSON.put("动作", action);
+                            listJSONObject.put(Integer.toString(i), tempJSON);
+                            i++;
+                        }
                     }
-                    else {
+                    else {  // 无简称
+                        JSONObject tempJSON = new JSONObject();
                         tempJSON.put("名称", packageSimpleName);
+                        tempJSON.put("动作", action);
+                        listJSONObject.put(Integer.toString(i), tempJSON);
+                        i++;
                     }
-                    tempJSON.put("动作", action);
-                    listJSONObject.put(Integer.toString(i), tempJSON);
-                    i++;
+                    // end
+//                    String packageFullName = businessUtil.commonDAO.getFullNameBySimpleName(packageSimpleName, "叠加包订购");
+//                    if(!Objects.isNull(packageFullName)){   // 非空，是简称，需要替换为全名
+//                        tempJSON.put("名称", packageFullName);
+//                    }
+//                    else {
+//                        tempJSON.put("名称", packageSimpleName);
+//                    }
+//                    tempJSON.put("动作", action);
+//                    listJSONObject.put(Integer.toString(i), tempJSON);
+//                    i++;
                 }
                 listJSONObject.put("叠加包数量", i-1);
                 result.put("叠加包列表", listJSONObject);
@@ -189,7 +207,7 @@ public class BusinessUtil {
                     }
                     packageSimpleName = ss.substring(pos+1);
                     packageSimpleName = packageSimpleName.toUpperCase();    // 简称小写转大写
-                    String packageFullName = businessUtil.commonDAO.getFullNameBySimpleName(packageSimpleName, 2);
+                    String packageFullName = businessUtil.commonDAO.getFullNameBySimpleName(packageSimpleName, "改附属功能");
                     if(!Objects.isNull(packageFullName)){   // 非空，是简称，需要替换为全名
                         tempJSON.put("名称", packageFullName);
                     }

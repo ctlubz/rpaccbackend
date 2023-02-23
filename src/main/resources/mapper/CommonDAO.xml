@@ -32,6 +32,11 @@
         WHERE simple_name=#{simple_name}
         AND type=#{type}
     </select>
+    <select id="getFullNameListBySimpleName" resultType="java.lang.String">
+        SELECT full_name FROM tb_package_mapping
+        WHERE simple_name=#{simple_name}
+          AND type=#{type}
+    </select>
     <insert id="insertIntoUnread">
         INSERT INTO tb_unread(
             order_id, create_time

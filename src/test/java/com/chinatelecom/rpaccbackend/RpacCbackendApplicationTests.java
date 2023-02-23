@@ -60,13 +60,15 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void splitTest() throws Exception {
-        String testStr = "*业务号码：18109198279*产品类型：*UIM卡号：8986032224919047772*补换卡费优惠：VIP优惠*3G卡是否升级为4G卡:是";
-        System.out.println(BusinessUtil.parseRemark(testStr, "补卡"));
+        String testStr = "*业务号码：19109193665*订购/注销促销、叠加包名称 ：加-7.9小合约*终端串码：*特殊备注：";
+        System.out.println(BusinessUtil.parseRemark(testStr, "叠加包、促销订购"));
     }
     @Test
     void readJsonTest(){
-        Date now = new Date();
-        long twoMins = now.getTime() - 1000 * 60;
-        System.out.println(commonDAO.getUnread(new Date(twoMins)));
+        System.out.println(commonDAO.getFullNameListBySimpleName("7.小合约", "叠加包订购").size());
+    }
+    @Test
+    void testxxx(){
+        System.out.println(" ".equals(" "));
     }
 }

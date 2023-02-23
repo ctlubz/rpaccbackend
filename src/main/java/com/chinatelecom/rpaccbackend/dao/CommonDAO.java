@@ -12,7 +12,8 @@ public interface CommonDAO {
     List<OrderIndex> orderPoolIndex();
     void deleteByDate(@Param("time")Date time);
     void insertIntoExecuting(@Param("order_id") Long orderId);
-    String getFullNameBySimpleName(@Param("simple_name")String simpleName, @Param("type")int type);
+    String getFullNameBySimpleName(@Param("simple_name")String simpleName, @Param("type")String type);
+    List<String> getFullNameListBySimpleName(@Param("simple_name") String simpleName, @Param("type") String type);
     void updateExecuting(@Param("time")Date time);
     void insertIntoUnread(@Param("order_id") Long orderId);
     void deleteUnread(@Param("orderId") Long orderId);
