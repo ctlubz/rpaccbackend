@@ -20,49 +20,6 @@ public class BusinessUtil {
     public void init(){
         businessUtil = this;
     }
-//    public static JSONObject businessRemark(String inputStr){
-//        // 业务类型
-//        String businessType = StringSplit.lastContext(inputStr, false);
-//        JSONObject businessFactorJson = (JSONObject) JSONObject.parse(JsonUtil.readJsonFile("src/main/resources/config/BusinessFactorConfig.json"));
-//        if(Objects.isNull(businessType) || !businessFactorJson.containsKey(businessType)){   // 为空或者不支持
-//             return null;
-//        }
-//        // 业务备注
-//        String context = StringSplit.lastContext(inputStr, true);   // 为空
-//        if(Objects.isNull(context)){
-//            return null;
-//        }
-//        String[] contextList = context.split("\\|");
-//        JSONObject result = new JSONObject();
-//        JSONObject splitByDivideJson = (JSONObject) JSONObject.parse(JsonUtil.readJsonFile("src/main/resources/config/BusinessDivideConfig.json"));
-//        JSONArray businessFactorList = businessFactorJson.getJSONArray(businessType);
-//        for (String s : contextList){
-//            int middle = s.indexOf('：');
-//            String key = s.substring(0, middle);
-//            // 去掉key中的空格
-//            key = key.replace(" ", "");
-//            if(!businessFactorList.contains(key)){
-//                continue;
-//            }
-//            String value = s.substring(middle + 1);
-//            //如果需要二次分割
-//            if(splitByDivideJson.containsKey(key)){
-//                JSONArray jsonArray = splitByDivideJson.getJSONArray(key);
-//                String[] tempList = value.split("/");
-//                // 分割元素和需求元素数量不相等
-//                if(!Objects.equals(tempList.length, jsonArray.size())){
-//                    return null;
-//                }
-//                for(int i = 0; i < tempList.length; i++){
-//                    result.put(jsonArray.get(i).toString(), tempList[i]);
-//                }
-//            }
-//            else{
-//                result.put(key, value);
-//            }
-//        }
-//        return result;
-//    }
 
     public static JSONObject parseRemark(String remark, String businessType) throws Exception{
         JSONObject businessFactorJson = BusinessFactorConfig.businessFactorJson;
@@ -93,15 +50,21 @@ public class BusinessUtil {
         JSONObject result = new JSONObject();
         String[] factorList = remark.split("\\*");
         for(String s : factorList){
+//            System.out.println(s);
             if(s.isEmpty())
                 continue;
             int middle = s.indexOf('：');    // 根据：分割
+            if(middle <= 0)
+                continue;
             String key = s.substring(0, middle);    // 取key
             key = key.replace(" ", ""); // 去掉key中空格
             if(!factorArray.contains(key)){ // 如果不是业务需要的元素直接下一步
                 continue;
             }
             String value = s.substring(middle + 1); // 取值
+            if(key.equals("业务号码")){
+                value = value.replace(" ", "");
+            }
             result.put(key, value);
         }
         return result;
@@ -114,6 +77,8 @@ public class BusinessUtil {
                 continue;
             }
             int middle = s.indexOf('：');    // 根据：分割
+            if(middle <= 0)
+                continue;
             String key = s.substring(0, middle);    // 取key
             key = key.replace(" ", ""); // 去掉key中空格
             if(!factorArray.contains(key)){ // 如果不是业务需要的元素直接下一步
@@ -122,6 +87,9 @@ public class BusinessUtil {
             String value = s.substring(middle + 1); // 取值
             if(value.isEmpty()){    // 值为空跳过
                 continue;
+            }
+            if(key.equals("业务号码")){
+                value = value.replace(" ", "");
             }
             if(key.equals("订购/注销促销、叠加包名称")){ // 如果是订购/注销促销、叠加包名称需要进一步划分
                 value = value.replace("；", ";");    // 半角换全角
@@ -147,7 +115,7 @@ public class BusinessUtil {
                         action = "订购";
                     }
                     if(action.equals("取")){
-                        action = "注销";
+                        action = "退订";
                     }
                     packageSimpleName = ss.substring(pos+1);
                     packageSimpleName = packageSimpleName.toUpperCase();    // 简称小写转大写
@@ -179,6 +147,8 @@ public class BusinessUtil {
                 continue;
             }
             int middle = s.indexOf('：');    // 根据：分割
+            if(middle <= 0)
+                continue;
             String key = s.substring(0, middle);    // 取key
             key = key.replace(" ", ""); // 去掉key中空格
             if(!factorArray.contains(key)){ // 如果不是业务需要的元素直接下一步
@@ -187,6 +157,9 @@ public class BusinessUtil {
             String value = s.substring(middle + 1); // 取值
             if(value.isEmpty()){    // 值为空跳过
                 continue;
+            }
+            if(key.equals("业务号码")){
+                value = value.replace(" ", "");
             }
             if(key.equals("订购/注销的叠加包名称")){ // 如果是订购/注销促销、叠加包名称需要进一步划分
                 value = value.replace("；", ";");    // 半角换全角
@@ -212,7 +185,7 @@ public class BusinessUtil {
                         action = "订购";
                     }
                     if(action.equals("取")){
-                        action = "注销";
+                        action = "退订";
                     }
                     packageSimpleName = ss.substring(pos+1);
                     packageSimpleName = packageSimpleName.toUpperCase();    // 简称小写转大写
