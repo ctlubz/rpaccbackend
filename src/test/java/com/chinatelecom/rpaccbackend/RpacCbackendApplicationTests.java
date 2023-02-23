@@ -65,6 +65,8 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void readJsonTest(){
-        orderPoolDAO.deleteOrder(123L, "RPA运行报错");
+        Date now = new Date();
+        long twoMins = now.getTime() - 1000 * 60;
+        System.out.println(commonDAO.getUnread(new Date(twoMins)));
     }
 }

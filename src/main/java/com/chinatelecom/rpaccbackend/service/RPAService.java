@@ -14,6 +14,7 @@ import com.chinatelecom.rpaccbackend.pojo.entity.OrderPool;
 import com.chinatelecom.rpaccbackend.pojo.vo.OrderInfoVO;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -67,6 +68,7 @@ public class RPAService {
         }
         orderInfo.setRemark(orderInfoVO.getRemark());
         orderInfoDAO.insert(orderInfo);
+        commonDAO.deleteUnread(orderInfo.getOrderId());
         // 2. 初始化工单池对象
         String businessType = StringSplit.lastContext(orderInfo.getRemark(), false);    // 业务动作
         // @TODO 对业务动作进行筛选
@@ -119,5 +121,13 @@ public class RPAService {
      * */
     public void addUnread(Long orderId) throws Exception{
         commonDAO.insertIntoUnread(orderId);
+    }
+    /**
+     * 获取已领未读工单
+     * */
+    public Long getUnread() throws Exception{
+        Date now = new Date();
+        long twoMins = now.getTime() - 1000 * 60L;
+        return commonDAO.getUnread(new Date(twoMins));
     }
 }

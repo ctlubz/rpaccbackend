@@ -15,4 +15,6 @@ public interface CommonDAO {
     String getFullNameBySimpleName(@Param("simple_name")String simpleName, @Param("type")int type);
     void updateExecuting(@Param("time")Date time);
     void insertIntoUnread(@Param("order_id") Long orderId);
+    void deleteUnread(@Param("orderId") Long orderId);
+    Long getUnread(@Param("create_time") Date time);
 }

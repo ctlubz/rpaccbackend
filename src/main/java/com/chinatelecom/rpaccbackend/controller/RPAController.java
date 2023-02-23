@@ -38,6 +38,9 @@ public class RPAController {
 
     @PostMapping("/unread/add")
     @ApiOperation("已领未读工单记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderId", value = "工单号"),
+    })
     public Result<Object> addUnread(
             @RequestParam(name = "orderId") Long orderId
     ) throws Exception
@@ -45,7 +48,13 @@ public class RPAController {
         rpaService.addUnread(orderId);
         return Result.ok();
     }
-
+    @GetMapping("/unread/get")
+    @ApiOperation("获取已领未读工单")
+    public Result<Object> getUnread() throws Exception{
+        return Result.ok(rpaService.getUnread());
+    }
+    @PostMapping("add")
+    @ApiOperation("添加工单")
     public Result<Object> addOrder(@RequestBody OrderInfoVO orderInfoVO) throws Exception{
         //判断工单号是否为空
         try {
