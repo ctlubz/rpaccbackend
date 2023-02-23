@@ -32,7 +32,14 @@
         WHERE simple_name=#{simple_name}
         AND type=#{type}
     </select>
-
+    <insert id="insertIntoUnread">
+        INSERT INTO tb_unread(
+            order_id, create_time
+        )VALUES (
+                    #{order_id},
+                    now()
+                )
+    </insert>
     <select id="updateExecuting">
         UPDATE tb_order_pool AS op
         INNER JOIN

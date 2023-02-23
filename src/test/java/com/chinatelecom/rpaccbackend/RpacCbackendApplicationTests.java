@@ -60,14 +60,11 @@ class RpacCbackendApplicationTests {
     }
     @Test
     void splitTest() throws Exception {
-        String testStr = "*业务号码：17729278392*订购/注销促销、叠加包名称：加-10流量包;加-99融合；流量包三号*终端串码：无*特殊备注：无";
-        System.out.println(BusinessUtil.parseRemark(testStr, "叠加包、促销订购"));
+        String testStr = "*业务号码：18109198279*产品类型：*UIM卡号：8986032224919047772*补换卡费优惠：VIP优惠*3G卡是否升级为4G卡:是";
+        System.out.println(BusinessUtil.parseRemark(testStr, "补卡"));
     }
     @Test
     void readJsonTest(){
-        Date date= new Date();
-        long dateValue = date.getTime();
-        dateValue = dateValue - 120000;  // 120000 两分钟
-        commonDAO.updateExecuting(new Date(dateValue));
+        orderPoolDAO.deleteOrder(123L, "RPA运行报错");
     }
 }

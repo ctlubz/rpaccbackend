@@ -114,4 +114,10 @@ public class RPAService {
         // @TODO 执行中订单状态，定时返回
         return result;
     }
+    /**
+     * 领单机器人添加已领未读工单
+     * */
+    public void addUnread(Long orderId) throws Exception{
+        commonDAO.insertIntoUnread(orderId);
+    }
 }

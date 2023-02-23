@@ -33,15 +33,19 @@ public class RPAController {
     @ApiOperation("机器人无视工单查询")
     public Result<Integer> testBoolean(@RequestParam Long orderId) throws Exception{
         OrderIgnore orderIgnore = orderIgnoreDAO.selectById(orderId);
-        return Result.ok(Objects.isNull(orderIgnore) ? 0 : 1);
+        return Result.ok(Objects.isNull(orderIgnore) ? 0 : 1);  // 0取1无视
     }
-//    @GetMapping("feedback")
-//    @ApiOperation("机器人反馈中台取数")
-//    public Result<Object> feedback(){
-//        return Result.ok(rpaService.feedbackService());
-//    }
-    @PostMapping("add")
-    @ApiOperation("添加工单")
+
+    @PostMapping("/unread/add")
+    @ApiOperation("已领未读工单记录")
+    public Result<Object> addUnread(
+            @RequestParam(name = "orderId") Long orderId
+    ) throws Exception
+    {
+        rpaService.addUnread(orderId);
+        return Result.ok();
+    }
+
     public Result<Object> addOrder(@RequestBody OrderInfoVO orderInfoVO) throws Exception{
         //判断工单号是否为空
         try {
