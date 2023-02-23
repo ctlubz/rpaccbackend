@@ -74,13 +74,14 @@ public class OrderPoolService {
                 orderHistory.setOrderId(orderId);
                 orderHistory.setOrderStatus(status);
                 orderHistory.setAutomatic(2);   //标记无法完成
+                orderHistory.setMessage(message);
                 orderHistoryDAO.insert(orderHistory);
                 orderLogDAO.insert(orderLog);
                 //添加table ignore
                 OrderIgnore orderIgnore = new OrderIgnore();
                 orderIgnore.setOrderId(orderId);
                 orderIgnoreDAO.insert(orderIgnore);
-                orderPoolDAO.deleteById(orderId);
+                orderPoolDAO.deleteOrder(orderId, message);
                 break;
             case 255:   //HISTORY订单完全完成，添加tb_order_history 删除订单
                 // 记录log
@@ -88,8 +89,9 @@ public class OrderPoolService {
                 orderHistory.setOrderId(orderId);
                 orderHistory.setOrderStatus(status);
                 orderHistory.setAutomatic(orderPool.getAutomatic());   //标记是否自动完成
+                orderHistory.setMessage(message);
                 orderHistoryDAO.insert(orderHistory);
-                orderPoolDAO.deleteById(orderId);
+                orderPoolDAO.deleteOrder(orderId, message);
                 break;
             default:
                 throw new BusinessException("非法工单状态");

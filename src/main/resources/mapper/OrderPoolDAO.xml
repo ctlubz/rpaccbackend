@@ -33,4 +33,14 @@
         UPDATE tb_executing
         SET is_deleted=1
     </update>
+    <update id="deleteOrder">
+        UPDATE tb_order_pool
+        <set>
+            message=#{message},
+            is_deleted=1
+        </set>
+        <where>
+            order_id=#{id}
+        </where>
+    </update>
 </mapper>

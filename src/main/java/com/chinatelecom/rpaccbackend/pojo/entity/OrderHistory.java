@@ -19,6 +19,7 @@ public class OrderHistory {
     private String buisType;
     @TableField(value = "remark", typeHandler = FastjsonTypeHandler.class)
     private JSON remark;
+    private String message;
     @TableField("order_status")
     private Integer orderStatus;
     @TableField("acceptor_id")
